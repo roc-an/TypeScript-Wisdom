@@ -1474,6 +1474,8 @@ namespace ts {
             }
         }
 
+        if (force) return { type: UpToDateStatusType.ForceBuild };
+
         // Collect the expected outputs of this project
         const outputs = getAllProjectOutputs(project, !host.useCaseSensitiveFileNames());
 
@@ -1481,38 +1483,36 @@ namespace ts {
         let oldestOutputFileName = "(none)";
         let oldestOutputFileTime = maximumDate;
         let newestDeclarationFileContentChangedTime;
-        if (!force) {
-            for (const output of outputs) {
-                // Output is missing; can stop checking
-                const outputTime = ts.getModifiedTime(host, output);
-                if (outputTime === missingFileModifiedTime) {
-                    return {
-                        type: UpToDateStatusType.OutputMissing,
-                        missingOutputFileName: output
-                    };
-                }
+        for (const output of outputs) {
+            // Output is missing; can stop checking
+            const outputTime = ts.getModifiedTime(host, output);
+            if (outputTime === missingFileModifiedTime) {
+                return {
+                    type: UpToDateStatusType.OutputMissing,
+                    missingOutputFileName: output
+                };
+            }
 
-                if (outputTime < oldestOutputFileTime) {
-                    oldestOutputFileTime = outputTime;
-                    oldestOutputFileName = output;
-                }
+            if (outputTime < oldestOutputFileTime) {
+                oldestOutputFileTime = outputTime;
+                oldestOutputFileName = output;
+            }
 
-                // If an output is older than the newest input, we can stop checking
-                if (outputTime < newestInputFileTime) {
-                    return {
-                        type: UpToDateStatusType.OutOfDateWithSelf,
-                        outOfDateOutputFileName: oldestOutputFileName,
-                        newerInputFileName: newestInputFileName
-                    };
-                }
+            // If an output is older than the newest input, we can stop checking
+            if (outputTime < newestInputFileTime) {
+                return {
+                    type: UpToDateStatusType.OutOfDateWithSelf,
+                    outOfDateOutputFileName: oldestOutputFileName,
+                    newerInputFileName: newestInputFileName
+                };
+            }
 
-                // Keep track of when the most recent time a .d.ts file was changed.
-                // In addition to file timestamps, we also keep track of when a .d.ts file
-                // had its file touched but not had its contents changed - this allows us
-                // to skip a downstream typecheck
-                if (isDeclarationFile(output)) {
-                    newestDeclarationFileContentChangedTime = newer(newestDeclarationFileContentChangedTime, outputTime);
-                }
+            // Keep track of when the most recent time a .d.ts file was changed.
+            // In addition to file timestamps, we also keep track of when a .d.ts file
+            // had its file touched but not had its contents changed - this allows us
+            // to skip a downstream typecheck
+            if (isDeclarationFile(output)) {
+                newestDeclarationFileContentChangedTime = newer(newestDeclarationFileContentChangedTime, outputTime);
             }
         }
 
@@ -1561,7 +1561,7 @@ namespace ts {
         );
         if (dependentPackageFileStatus) return dependentPackageFileStatus;
 
-        if (!force && !state.buildInfoChecked.has(resolvedPath)) {
+        if (!state.buildInfoChecked.has(resolvedPath)) {
             state.buildInfoChecked.set(resolvedPath, true);
             const buildInfoPath = getTsBuildInfoEmitOutputFilePath(project.options);
             if (buildInfoPath) {
@@ -2083,14 +2083,6 @@ namespace ts {
     }
 
     function reportUpToDateStatus(state: SolutionBuilderState, configFileName: string, status: UpToDateStatus) {
-        if (state.options.force && (status.type === UpToDateStatusType.UpToDate || status.type === UpToDateStatusType.UpToDateWithUpstreamTypes)) {
-            return reportStatus(
-                state,
-                Diagnostics.Project_0_is_being_forcibly_rebuilt,
-                relName(state, configFileName)
-            );
-        }
-
         switch (status.type) {
             case UpToDateStatusType.OutOfDateWithSelf:
                 return reportStatus(
@@ -2170,6 +2162,12 @@ namespace ts {
                     relName(state, configFileName),
                     status.version,
                     version
+                );
+            case UpToDateStatusType.ForceBuild:
+                return reportStatus(
+                    state,
+                    Diagnostics.Project_0_is_being_forcibly_rebuilt,
+                    relName(state, configFileName)
                 );
             case UpToDateStatusType.ContainerOnly:
             // Don't report status on "solution" projects
