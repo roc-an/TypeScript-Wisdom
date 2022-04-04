@@ -532,8 +532,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/user/username/projects/sample1/core/anotherModule.js] file changed its modified time
-//// [/user/username/projects/sample1/core/anotherModule.d.ts] file changed its modified time
 //// [/user/username/projects/sample1/core/index.js]
 "use strict";
 exports.__esModule = true;
@@ -618,10 +616,7 @@ getModifiedTimes:: {
  "/user/username/projects/sample1/core/tsconfig.tsbuildinfo": 1
 } 
 
-setModifiedTimes:: {
- "/user/username/projects/sample1/core/anothermodule.js": 1,
- "/user/username/projects/sample1/core/anothermodule.d.ts": 1
-} 
+setModifiedTimes:: {} 
 
 Change:: Build logic or update time stamps
 
@@ -1003,8 +998,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/user/username/projects/sample1/core/anotherModule.js] file changed its modified time
-//// [/user/username/projects/sample1/core/anotherModule.d.ts] file changed its modified time
 //// [/user/username/projects/sample1/core/index.js]
 "use strict";
 exports.__esModule = true;
@@ -1080,10 +1073,7 @@ getModifiedTimes:: {
  "/user/username/projects/sample1/core/tsconfig.tsbuildinfo": 1
 } 
 
-setModifiedTimes:: {
- "/user/username/projects/sample1/core/anothermodule.js": 1,
- "/user/username/projects/sample1/core/anothermodule.d.ts": 1
-} 
+setModifiedTimes:: {} 
 
 Change:: Build logic or update time stamps
 
@@ -1467,8 +1457,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/user/username/projects/sample1/core/anotherModule.js] file changed its modified time
-//// [/user/username/projects/sample1/core/anotherModule.d.ts] file changed its modified time
 //// [/user/username/projects/sample1/core/index.js]
 "use strict";
 exports.__esModule = true;
@@ -1560,10 +1548,7 @@ getModifiedTimes:: {
  "/user/username/projects/sample1/core/tsconfig.tsbuildinfo": 1
 } 
 
-setModifiedTimes:: {
- "/user/username/projects/sample1/core/anothermodule.js": 1,
- "/user/username/projects/sample1/core/anothermodule.d.ts": 1
-} 
+setModifiedTimes:: {} 
 
 Change:: Build logic or update time stamps
 

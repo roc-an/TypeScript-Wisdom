@@ -366,7 +366,8 @@ export class someClass { }`),
                 subScenario: "incremental-declaration-doesnt-change",
                 modifyFs: fs => appendText(fs, "/src/core/index.ts", `
 class someClass2 { }`),
-            }
+            },
+            noChangeRun,
         ];
 
         describe("lists files", () => {

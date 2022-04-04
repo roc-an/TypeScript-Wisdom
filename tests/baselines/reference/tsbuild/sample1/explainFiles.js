@@ -533,11 +533,7 @@ getModifiedTime:: {
  "/src/tests/index.d.ts": 1
 }
 
-setModifiedTime:: {
- "/src/core/anotherModule.js": 1,
- "/src/core/anotherModule.d.ts": 1,
- "/src/core/anotherModule.d.ts.map": 1
-}
+setModifiedTime:: {}
 
 fileExists:: {
  "/src/core/index.ts": 1,
@@ -556,7 +552,6 @@ directoryExists:: {
 }
 
 
-//// [/src/core/anotherModule.d.ts] file changed its modified time
 //// [/src/core/index.d.ts]
 export declare const someString: string;
 export declare function leftPad(s: string, n: number): string;
@@ -853,15 +848,7 @@ getModifiedTime:: {
 }
 
 setModifiedTime:: {
- "/src/core/anotherModule.js": 1,
- "/src/core/anotherModule.d.ts": 1,
- "/src/core/anotherModule.d.ts.map": 1,
- "/src/logic/index.js": 1,
- "/src/logic/index.js.map": 1,
- "/src/logic/index.d.ts": 1,
  "/src/logic/tsconfig.tsbuildinfo": 1,
- "/src/tests/index.js": 1,
- "/src/tests/index.d.ts": 1,
  "/src/tests/tsconfig.tsbuildinfo": 1
 }
 
@@ -951,3 +938,45 @@ var someClass2 = /** @class */ (function () {
 
 //// [/src/logic/tsconfig.tsbuildinfo] file changed its modified time
 //// [/src/tests/tsconfig.tsbuildinfo] file changed its modified time
+
+
+Change:: no-change-run
+Input::
+
+
+Output::
+/lib/tsc --b /src/tests --explainFiles --v
+[[90m12:10:00 AM[0m] Projects in this build: 
+    * src/core/tsconfig.json
+    * src/logic/tsconfig.json
+    * src/tests/tsconfig.json
+
+[[90m12:10:00 AM[0m] Project 'src/core/tsconfig.json' is up to date because newest input 'src/core/index.ts' is older than oldest output 'src/core/tsconfig.tsbuildinfo'
+
+[[90m12:10:00 AM[0m] Project 'src/logic/tsconfig.json' is up to date because newest input 'src/logic/index.ts' is older than oldest output 'src/logic/tsconfig.tsbuildinfo'
+
+[[90m12:10:00 AM[0m] Project 'src/tests/tsconfig.json' is up to date because newest input 'src/tests/index.ts' is older than oldest output 'src/tests/tsconfig.tsbuildinfo'
+
+exitCode:: ExitStatus.Success
+
+getModifiedTime:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/core/tsconfig.json": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/tsconfig.json": 1
+}
+
+setModifiedTime:: {}
+
+fileExists:: {}
+
+directoryExists:: {}
+
+

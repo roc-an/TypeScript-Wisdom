@@ -307,10 +307,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/a/b/commonFile1.js] file changed its modified time
-//// [/a/b/commonFile1.d.ts] file changed its modified time
-//// [/a/b/commonFile2.js] file changed its modified time
-//// [/a/b/commonFile2.d.ts] file changed its modified time
 //// [/a/b/project1.tsconfig.tsbuildinfo] file changed its modified time
 
 fileExists:: {
@@ -332,10 +328,6 @@ getModifiedTimes:: {
 } 
 
 setModifiedTimes:: {
- "/a/b/commonfile1.js": 1,
- "/a/b/commonfile1.d.ts": 1,
- "/a/b/commonfile2.js": 1,
- "/a/b/commonfile2.d.ts": 1,
  "/a/b/project1.tsconfig.tsbuildinfo": 1
 } 
 
@@ -397,8 +389,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/a/b/other.js] file changed its modified time
-//// [/a/b/other.d.ts] file changed its modified time
 //// [/a/b/project2.tsconfig.tsbuildinfo] file changed its modified time
 
 fileExists:: {} 
@@ -417,8 +407,6 @@ getModifiedTimes:: {
 } 
 
 setModifiedTimes:: {
- "/a/b/other.js": 1,
- "/a/b/other.d.ts": 1,
  "/a/b/project2.tsconfig.tsbuildinfo": 1
 } 
 
@@ -486,8 +474,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/a/b/other.js] file changed its modified time
-//// [/a/b/other.d.ts] file changed its modified time
 //// [/a/b/project2.tsconfig.tsbuildinfo] file changed its modified time
 
 fileExists:: {
@@ -507,8 +493,6 @@ getModifiedTimes:: {
 } 
 
 setModifiedTimes:: {
- "/a/b/other.js": 1,
- "/a/b/other.d.ts": 1,
  "/a/b/project2.tsconfig.tsbuildinfo": 1
 } 
 
@@ -679,10 +663,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/a/b/commonFile1.js] file changed its modified time
-//// [/a/b/commonFile1.d.ts] file changed its modified time
-//// [/a/b/commonFile2.js] file changed its modified time
-//// [/a/b/commonFile2.d.ts] file changed its modified time
 //// [/a/b/project1.tsconfig.tsbuildinfo] file changed its modified time
 
 fileExists:: {
@@ -702,10 +682,6 @@ getModifiedTimes:: {
 } 
 
 setModifiedTimes:: {
- "/a/b/commonfile1.js": 1,
- "/a/b/commonfile1.d.ts": 1,
- "/a/b/commonfile2.js": 1,
- "/a/b/commonfile2.d.ts": 1,
  "/a/b/project1.tsconfig.tsbuildinfo": 1
 } 
 
@@ -722,7 +698,7 @@ getModifiedTimes:: {}
 setModifiedTimes:: {} 
 
 Output::
-[[90m12:01:38 AM[0m] Project 'project2.tsconfig.json' is out of date because oldest output 'other.js' is older than newest input 'alpha.tsconfig.json'
+[[90m12:01:38 AM[0m] Project 'project2.tsconfig.json' is out of date because oldest output 'commonFile1.js' is older than newest input 'alpha.tsconfig.json'
 
 [[90m12:01:39 AM[0m] Building project '/a/b/project2.tsconfig.json'...
 

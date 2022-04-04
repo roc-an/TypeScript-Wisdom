@@ -428,8 +428,6 @@ export declare function f2(): void;
   "size": 983
 }
 
-//// [/user/username/projects/myproject/webpack/index.js] file changed its modified time
-//// [/user/username/projects/myproject/webpack/index.d.ts] file changed its modified time
 //// [/user/username/projects/myproject/webpack/tsconfig.tsbuildinfo] file changed its modified time
 
 fileExists:: {} 
@@ -450,7 +448,5 @@ getModifiedTimes:: {
 } 
 
 setModifiedTimes:: {
- "/user/username/projects/myproject/webpack/index.js": 1,
- "/user/username/projects/myproject/webpack/index.d.ts": 1,
  "/user/username/projects/myproject/webpack/tsconfig.tsbuildinfo": 1
 } 

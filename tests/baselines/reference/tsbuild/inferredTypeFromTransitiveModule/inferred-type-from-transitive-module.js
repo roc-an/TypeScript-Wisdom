@@ -300,10 +300,7 @@ getModifiedTime:: {
  "/src/obj/tsconfig.tsbuildinfo": 1
 }
 
-setModifiedTime:: {
- "/src/obj/bundling.js": 1,
- "/src/obj/bundling.d.ts": 1
-}
+setModifiedTime:: {}
 
 fileExists:: {
  "/src/bundling.ts": 1,
@@ -464,11 +461,7 @@ getModifiedTime:: {
  "/src/obj/tsconfig.tsbuildinfo": 1
 }
 
-setModifiedTime:: {
- "/src/obj/bundling.js": 1,
- "/src/obj/bundling.d.ts": 1,
- "/src/obj/index.js": 1
-}
+setModifiedTime:: {}
 
 fileExists:: {
  "/src/bundling.ts": 1,

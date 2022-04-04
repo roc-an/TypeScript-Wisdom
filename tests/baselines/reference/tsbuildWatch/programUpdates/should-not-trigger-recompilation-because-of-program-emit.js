@@ -290,12 +290,6 @@ FsWatchesRecursive::
 
 exitCode:: ExitStatus.undefined
 
-//// [/user/username/projects/sample1/core/anotherModule.js] file changed its modified time
-//// [/user/username/projects/sample1/core/anotherModule.d.ts.map] file changed its modified time
-//// [/user/username/projects/sample1/core/anotherModule.d.ts] file changed its modified time
-//// [/user/username/projects/sample1/core/index.js] file changed its modified time
-//// [/user/username/projects/sample1/core/index.d.ts.map] file changed its modified time
-//// [/user/username/projects/sample1/core/index.d.ts] file changed its modified time
 //// [/user/username/projects/sample1/core/tsconfig.tsbuildinfo]
 {"program":{"fileNames":["../../../../../a/lib/lib.d.ts","./anothermodule.ts","./file3.ts","./index.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-2676574883-export const World = \"hello\";\r\n",{"version":"-13729955264-export const y = 10;","signature":"-7152472870-export declare const y = 10;\n"},"-18749805970-export const someString: string = \"HELLO WORLD\";\r\nexport function leftPad(s: string, n: number) { return s + n; }\r\nexport function multiply(a: number, b: number) { return a * b; }\r\n"],"options":{"composite":true,"declaration":true,"declarationMap":true,"skipDefaultLibCheck":true},"referencedMap":[],"exportedModulesMap":[],"semanticDiagnosticsPerFile":[1,2,3,4]},"version":"FakeTSVersion"}
 
@@ -377,14 +371,7 @@ getModifiedTimes:: {
  "/user/username/projects/sample1/core/tsconfig.tsbuildinfo": 1
 } 
 
-setModifiedTimes:: {
- "/user/username/projects/sample1/core/anothermodule.js": 1,
- "/user/username/projects/sample1/core/anothermodule.d.ts": 1,
- "/user/username/projects/sample1/core/anothermodule.d.ts.map": 1,
- "/user/username/projects/sample1/core/index.js": 1,
- "/user/username/projects/sample1/core/index.d.ts": 1,
- "/user/username/projects/sample1/core/index.d.ts.map": 1
-} 
+setModifiedTimes:: {} 
 
 Change:: No change
 
