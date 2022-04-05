@@ -68,14 +68,6 @@ exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
 
 getModifiedTime:: {
  "/src/a.ts": 1,
- "/src/b.ts": 1,
- "/src/c.ts": 1
-}
-
-setModifiedTime:: {}
-
-fileExists:: {
- "/src/a.ts": 1,
  "/src/a.js": 1,
  "/src/a.d.ts": 1,
  "/src/b.ts": 1,
@@ -83,6 +75,10 @@ fileExists:: {
  "/src/c.ts": 1,
  "/src/c.js": 1
 }
+
+setModifiedTime:: {}
+
+fileExists:: {}
 
 directoryExists:: {
  "/src/node_modules/@types": 2,

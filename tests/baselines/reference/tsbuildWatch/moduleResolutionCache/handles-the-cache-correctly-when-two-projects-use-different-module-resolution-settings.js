@@ -288,8 +288,6 @@ export {};
 
 
 fileExists:: {
- "/user/username/projects/myproject/project1/index.ts": 1,
- "/user/username/projects/myproject/project1/index.js": 1,
  "/user/username/projects/myproject/project1/node_modules/file/package.json": 1,
  "/user/username/projects/myproject/project1/node_modules/file.ts": 1,
  "/user/username/projects/myproject/project1/node_modules/file.tsx": 1,
@@ -301,13 +299,9 @@ fileExists:: {
  "/user/username/projects/myproject/node_modules/@types/foo/index.d.ts": 1,
  "/user/username/projects/myproject/node_modules/@types/bar/package.json": 1,
  "/user/username/projects/myproject/node_modules/@types/bar/index.d.ts": 1,
- "/user/username/projects/myproject/project1/index.d.ts": 1,
- "/user/username/projects/myproject/project2/index.ts": 1,
- "/user/username/projects/myproject/project2/index.js": 1,
  "/user/username/projects/myproject/project2/file.ts": 1,
  "/user/username/projects/myproject/project2/file.tsx": 1,
- "/user/username/projects/myproject/project2/file.d.ts": 1,
- "/user/username/projects/myproject/project2/index.d.ts": 1
+ "/user/username/projects/myproject/project2/file.d.ts": 1
 } 
 
 directoryExists:: {
@@ -327,7 +321,11 @@ directoryExists:: {
 
 getModifiedTimes:: {
  "/user/username/projects/myproject/project1/index.ts": 1,
- "/user/username/projects/myproject/project2/index.ts": 1
+ "/user/username/projects/myproject/project1/index.js": 1,
+ "/user/username/projects/myproject/project1/index.d.ts": 1,
+ "/user/username/projects/myproject/project2/index.ts": 1,
+ "/user/username/projects/myproject/project2/index.js": 1,
+ "/user/username/projects/myproject/project2/index.d.ts": 1
 } 
 
 setModifiedTimes:: {} 
@@ -473,8 +471,6 @@ var bar = 10;
 
 
 fileExists:: {
- "/user/username/projects/myproject/project1/index.ts": 1,
- "/user/username/projects/myproject/project1/index.js": 1,
  "/user/username/projects/myproject/project1/node_modules/file/package.json": 1,
  "/user/username/projects/myproject/project1/node_modules/file.ts": 1,
  "/user/username/projects/myproject/project1/node_modules/file.tsx": 1,
@@ -485,8 +481,7 @@ fileExists:: {
  "/user/username/projects/myproject/node_modules/@types/foo/package.json": 1,
  "/user/username/projects/myproject/node_modules/@types/foo/index.d.ts": 1,
  "/user/username/projects/myproject/node_modules/@types/bar/package.json": 1,
- "/user/username/projects/myproject/node_modules/@types/bar/index.d.ts": 1,
- "/user/username/projects/myproject/project1/index.d.ts": 1
+ "/user/username/projects/myproject/node_modules/@types/bar/index.d.ts": 1
 } 
 
 directoryExists:: {

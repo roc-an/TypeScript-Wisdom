@@ -80,20 +80,13 @@ export {};
 
 
 fileExists:: {
- "/user/username/projects/myproject/packages/b/src/foo.ts": 1,
- "/user/username/projects/myproject/packages/b/src/bar/foo.ts": 1,
- "/user/username/projects/myproject/packages/b/lib/foo.js": 1,
- "/user/username/projects/myproject/packages/b/lib/foo.d.ts": 1,
- "/user/username/projects/myproject/packages/a/src/test.ts": 1,
- "/user/username/projects/myproject/packages/a/lib/test.js": 1,
  "/user/username/projects/myproject/node_modules/b/package.json": 1,
  "/user/username/projects/myproject/node_modules/b/lib/foo.ts": 1,
  "/user/username/projects/myproject/node_modules/b/lib/foo.tsx": 1,
  "/user/username/projects/myproject/node_modules/b/lib/foo.d.ts": 1,
  "/user/username/projects/myproject/node_modules/b/lib/bar/foo.ts": 1,
  "/user/username/projects/myproject/node_modules/b/lib/bar/foo.tsx": 1,
- "/user/username/projects/myproject/node_modules/b/lib/bar/foo.d.ts": 1,
- "/user/username/projects/myproject/packages/a/lib/test.d.ts": 1
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.d.ts": 1
 } 
 
 directoryExists:: {
@@ -124,7 +117,11 @@ directoryExists:: {
 getModifiedTimes:: {
  "/user/username/projects/myproject/packages/b/src/foo.ts": 1,
  "/user/username/projects/myproject/packages/b/src/bar/foo.ts": 1,
- "/user/username/projects/myproject/packages/a/src/test.ts": 1
+ "/user/username/projects/myproject/packages/b/lib/foo.js": 1,
+ "/user/username/projects/myproject/packages/b/lib/foo.d.ts": 1,
+ "/user/username/projects/myproject/packages/a/src/test.ts": 1,
+ "/user/username/projects/myproject/packages/a/lib/test.js": 1,
+ "/user/username/projects/myproject/packages/a/lib/test.d.ts": 1
 } 
 
 setModifiedTimes:: {} 

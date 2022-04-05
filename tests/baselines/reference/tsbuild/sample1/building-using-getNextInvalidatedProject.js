@@ -138,13 +138,7 @@ export declare function multiply(a: number, b: number): number;
 {"program":{"fileNames":["../../../../a/lib/lib.d.ts","./anothermodule.ts","./index.ts","./some_decl.d.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-2676574883-export const World = \"hello\";\r\n","-18749805970-export const someString: string = \"HELLO WORLD\";\r\nexport function leftPad(s: string, n: number) { return s + n; }\r\nexport function multiply(a: number, b: number) { return a * b; }\r\n",{"version":"-9253692965-declare const dts: any;\r\n","affectsGlobalScope":true}],"options":{"composite":true,"declaration":true,"declarationMap":true,"skipDefaultLibCheck":true},"referencedMap":[],"exportedModulesMap":[],"semanticDiagnosticsPerFile":[1,2,3,4]},"version":"FakeTSVersion"}
 
 
-fileExists:: {
- "/user/username/projects/core/anothermodule.ts": 1,
- "/user/username/projects/core/index.ts": 1,
- "/user/username/projects/core/some_decl.d.ts": 1,
- "/user/username/projects/core/anothermodule.js": 1,
- "/user/username/projects/core/anothermodule.d.ts": 1
-} 
+fileExists:: {} 
 
 directoryExists:: {
  "/user/username/projects/core/node_modules/@types": 1,
@@ -157,7 +151,9 @@ directoryExists:: {
 getModifiedTimes:: {
  "/user/username/projects/core/anothermodule.ts": 1,
  "/user/username/projects/core/index.ts": 1,
- "/user/username/projects/core/some_decl.d.ts": 1
+ "/user/username/projects/core/some_decl.d.ts": 1,
+ "/user/username/projects/core/anothermodule.js": 1,
+ "/user/username/projects/core/anothermodule.d.ts": 1
 } 
 
 setModifiedTimes:: {} 
@@ -192,9 +188,8 @@ export declare const m: typeof mod;
 
 
 fileExists:: {
- "/user/username/projects/logic/index.ts": 1,
- "/user/username/projects/logic/index.js": 1,
- "/user/username/projects/logic/index.d.ts": 1
+ "/user/username/projects/core/index.ts": 1,
+ "/user/username/projects/core/anothermodule.ts": 1
 } 
 
 directoryExists:: {
@@ -207,7 +202,9 @@ directoryExists:: {
 } 
 
 getModifiedTimes:: {
- "/user/username/projects/logic/index.ts": 1
+ "/user/username/projects/logic/index.ts": 1,
+ "/user/username/projects/logic/index.js": 1,
+ "/user/username/projects/logic/index.d.ts": 1
 } 
 
 setModifiedTimes:: {} 
@@ -237,9 +234,7 @@ export declare const m: typeof mod;
 
 
 fileExists:: {
- "/user/username/projects/tests/index.ts": 1,
- "/user/username/projects/tests/index.js": 1,
- "/user/username/projects/tests/index.d.ts": 1
+ "/user/username/projects/logic/index.ts": 1
 } 
 
 directoryExists:: {
@@ -253,7 +248,9 @@ directoryExists:: {
 } 
 
 getModifiedTimes:: {
- "/user/username/projects/tests/index.ts": 1
+ "/user/username/projects/tests/index.ts": 1,
+ "/user/username/projects/tests/index.js": 1,
+ "/user/username/projects/tests/index.d.ts": 1
 } 
 
 setModifiedTimes:: {} 
