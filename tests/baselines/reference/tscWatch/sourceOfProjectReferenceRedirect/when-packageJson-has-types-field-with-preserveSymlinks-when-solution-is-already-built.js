@@ -79,6 +79,54 @@ export {};
 {"program":{"fileNames":["../../../../../../a/lib/lib.d.ts","../../node_modules/b/lib/index.d.ts","../../node_modules/b/lib/bar.d.ts","./src/index.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-5677608893-export declare function foo(): void;\n","-2904461644-export declare function bar(): void;\n","3563314629-import { foo } from 'b';\nimport { bar } from 'b/lib/bar';\nfoo();\nbar();\n"],"options":{"composite":true,"outDir":"./lib","rootDir":"./src"},"fileIdsList":[[2,3]],"referencedMap":[[4,1]],"exportedModulesMap":[[4,1]],"semanticDiagnosticsPerFile":[1,3,2,4]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/myproject/packages/b/src/bar.ts": 1,
+ "/user/username/projects/myproject/packages/b/src/index.ts": 1,
+ "/user/username/projects/myproject/packages/b/lib/bar.js": 1,
+ "/user/username/projects/myproject/packages/b/lib/bar.d.ts": 1,
+ "/user/username/projects/myproject/packages/a/src/index.ts": 1,
+ "/user/username/projects/myproject/packages/a/lib/index.js": 1,
+ "/user/username/projects/myproject/node_modules/b/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b.ts": 1,
+ "/user/username/projects/myproject/node_modules/b.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/index.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.d.ts": 1,
+ "/user/username/projects/myproject/packages/a/lib/index.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/myproject/packages/b/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/node_modules/@types": 2,
+ "/user/username/projects/myproject/node_modules/@types": 2,
+ "/user/username/projects/node_modules/@types": 2,
+ "/user/username/node_modules/@types": 2,
+ "/user/node_modules/@types": 2,
+ "/node_modules/@types": 2,
+ "/user/username/projects/myproject/packages/b/lib": 1,
+ "/user/username/projects/myproject/packages/b": 1,
+ "/user/username/projects/myproject/packages/a/src/node_modules": 2,
+ "/user/username/projects/myproject/packages/a/node_modules": 2,
+ "/user/username/projects/myproject/packages/node_modules": 2,
+ "/user/username/projects/myproject/node_modules": 3,
+ "/user/username/projects/myproject/node_modules/b": 2,
+ "/user/username/projects/myproject/node_modules/b/lib": 2,
+ "/user/username/projects/myproject/node_modules/b/lib/bar": 1,
+ "/user/username/projects/myproject/packages/a/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/a/lib": 1,
+ "/user/username/projects/myproject/packages/a": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/myproject/packages/b/src/bar.ts": 1,
+ "/user/username/projects/myproject/packages/b/src/index.ts": 1,
+ "/user/username/projects/myproject/packages/a/src/index.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 /a/lib/tsc.js --w --p /user/username/projects/myproject/packages/A/tsconfig.json
 Output::
 >> Screen clear
@@ -210,3 +258,36 @@ exitCode:: ExitStatus.undefined
   "size": 948
 }
 
+
+fileExists:: {
+ "/user/username/projects/myproject/node_modules/b/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b.ts": 1,
+ "/user/username/projects/myproject/node_modules/b.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/index.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/myproject/packages/a/src/node_modules": 2,
+ "/user/username/projects/myproject/packages/a/node_modules": 2,
+ "/user/username/projects/myproject/packages/node_modules": 2,
+ "/user/username/projects/myproject/node_modules": 3,
+ "/user/username/projects/myproject/node_modules/b": 2,
+ "/user/username/projects/myproject/node_modules/b/lib": 2,
+ "/user/username/projects/myproject/node_modules/b/lib/bar": 1,
+ "/user/username/projects/myproject/packages/a/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/node_modules/@types": 1,
+ "/user/username/projects/myproject/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 

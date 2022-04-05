@@ -79,6 +79,57 @@ export {};
 {"program":{"fileNames":["../../../../../../a/lib/lib.d.ts","../b/lib/foo.d.ts","../b/lib/bar/foo.d.ts","./src/test.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-5677608893-export declare function foo(): void;\n","-2904461644-export declare function bar(): void;\n","14700910833-import { foo } from 'b/lib/foo';\nimport { bar } from 'b/lib/bar/foo';\nfoo();\nbar();\n"],"options":{"composite":true,"outDir":"./lib","rootDir":"./src"},"fileIdsList":[[2,3]],"referencedMap":[[4,1]],"exportedModulesMap":[[4,1]],"semanticDiagnosticsPerFile":[1,4,3,2]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/myproject/packages/b/src/foo.ts": 1,
+ "/user/username/projects/myproject/packages/b/src/bar/foo.ts": 1,
+ "/user/username/projects/myproject/packages/b/lib/foo.js": 1,
+ "/user/username/projects/myproject/packages/b/lib/foo.d.ts": 2,
+ "/user/username/projects/myproject/packages/a/src/test.ts": 1,
+ "/user/username/projects/myproject/packages/a/lib/test.js": 1,
+ "/user/username/projects/myproject/node_modules/b/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.d.ts": 1,
+ "/user/username/projects/myproject/packages/b/lib/bar/foo.d.ts": 1,
+ "/user/username/projects/myproject/packages/a/lib/test.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/myproject/packages/b/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/node_modules/@types": 2,
+ "/user/username/projects/myproject/node_modules/@types": 2,
+ "/user/username/projects/node_modules/@types": 2,
+ "/user/username/node_modules/@types": 2,
+ "/user/node_modules/@types": 2,
+ "/node_modules/@types": 2,
+ "/user/username/projects/myproject/packages/b/lib": 2,
+ "/user/username/projects/myproject/packages/b": 1,
+ "/user/username/projects/myproject/packages/b/lib/bar": 1,
+ "/user/username/projects/myproject/packages/a/src/node_modules": 2,
+ "/user/username/projects/myproject/packages/a/node_modules": 2,
+ "/user/username/projects/myproject/packages/node_modules": 2,
+ "/user/username/projects/myproject/node_modules": 2,
+ "/user/username/projects/myproject/node_modules/b/lib/foo": 1,
+ "/user/username/projects/myproject/node_modules/b": 1,
+ "/user/username/projects/myproject/node_modules/b/lib": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar": 1,
+ "/user/username/projects/myproject/packages/a/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/a/lib": 1,
+ "/user/username/projects/myproject/packages/a": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/myproject/packages/b/src/foo.ts": 1,
+ "/user/username/projects/myproject/packages/b/src/bar/foo.ts": 1,
+ "/user/username/projects/myproject/packages/a/src/test.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 /a/lib/tsc.js --w --p /user/username/projects/myproject/packages/A/tsconfig.json
 Output::
 >> Screen clear
@@ -212,3 +263,39 @@ exitCode:: ExitStatus.undefined
   "size": 962
 }
 
+
+fileExists:: {
+ "/user/username/projects/myproject/node_modules/b/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/foo.d.ts": 1,
+ "/user/username/projects/myproject/packages/b/lib/foo.d.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo/package.json": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.ts": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.tsx": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo.d.ts": 1,
+ "/user/username/projects/myproject/packages/b/lib/bar/foo.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/myproject/packages/a/src/node_modules": 2,
+ "/user/username/projects/myproject/packages/a/node_modules": 2,
+ "/user/username/projects/myproject/packages/node_modules": 2,
+ "/user/username/projects/myproject/node_modules": 2,
+ "/user/username/projects/myproject/node_modules/b/lib/foo": 1,
+ "/user/username/projects/myproject/node_modules/b": 1,
+ "/user/username/projects/myproject/node_modules/b/lib": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar/foo": 1,
+ "/user/username/projects/myproject/node_modules/b/lib/bar": 1,
+ "/user/username/projects/myproject/packages/a/node_modules/@types": 1,
+ "/user/username/projects/myproject/packages/node_modules/@types": 1,
+ "/user/username/projects/myproject/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 

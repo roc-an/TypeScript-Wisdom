@@ -89,6 +89,14 @@ interface String { charAt: any; }
 interface Array<T> { length: number; [n: number]: T; }
 
 
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
+
 Project Result:: {"project":"/user/username/projects/core/tsconfig.json","result":0}
 Output::
 
@@ -130,6 +138,30 @@ export declare function multiply(a: number, b: number): number;
 {"program":{"fileNames":["../../../../a/lib/lib.d.ts","./anothermodule.ts","./index.ts","./some_decl.d.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-2676574883-export const World = \"hello\";\r\n","-18749805970-export const someString: string = \"HELLO WORLD\";\r\nexport function leftPad(s: string, n: number) { return s + n; }\r\nexport function multiply(a: number, b: number) { return a * b; }\r\n",{"version":"-9253692965-declare const dts: any;\r\n","affectsGlobalScope":true}],"options":{"composite":true,"declaration":true,"declarationMap":true,"skipDefaultLibCheck":true},"referencedMap":[],"exportedModulesMap":[],"semanticDiagnosticsPerFile":[1,2,3,4]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/core/anothermodule.ts": 1,
+ "/user/username/projects/core/index.ts": 1,
+ "/user/username/projects/core/some_decl.d.ts": 1,
+ "/user/username/projects/core/anothermodule.js": 1,
+ "/user/username/projects/core/anothermodule.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/core/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/core/anothermodule.ts": 1,
+ "/user/username/projects/core/index.ts": 1,
+ "/user/username/projects/core/some_decl.d.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 Project Result:: {"project":"/user/username/projects/logic/tsconfig.json","result":0}
 Output::
 
@@ -159,6 +191,27 @@ export declare const m: typeof mod;
 {"program":{"fileNames":["../../../../a/lib/lib.d.ts","../core/index.d.ts","../core/anothermodule.d.ts","./index.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-9047123202-export declare const someString: string;\nexport declare function leftPad(s: string, n: number): string;\nexport declare function multiply(a: number, b: number): number;\n//# sourceMappingURL=index.d.ts.map","-4454971016-export declare const World = \"hello\";\n//# sourceMappingURL=anotherModule.d.ts.map","-5786964698-import * as c from '../core/index';\r\nexport function getSecondsInDay() {\r\n    return c.multiply(10, 15);\r\n}\r\nimport * as mod from '../core/anotherModule';\r\nexport const m = mod;\r\n"],"options":{"composite":true,"declaration":true,"skipDefaultLibCheck":true,"sourceMap":true},"fileIdsList":[[2,3]],"referencedMap":[[4,1]],"exportedModulesMap":[[4,1]],"semanticDiagnosticsPerFile":[1,3,2,4]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/logic/index.ts": 1,
+ "/user/username/projects/logic/index.js": 1,
+ "/user/username/projects/logic/index.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/core": 4,
+ "/user/username/projects/logic/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/logic/index.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 Project Result:: {"project":"/user/username/projects/tests/tsconfig.json","result":0}
 Output::
 
@@ -183,6 +236,36 @@ export declare const m: typeof mod;
 {"program":{"fileNames":["../../../../a/lib/lib.d.ts","../core/index.d.ts","../core/anothermodule.d.ts","../logic/index.d.ts","./index.ts"],"fileInfos":[{"version":"-7698705165-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }","affectsGlobalScope":true},"-9047123202-export declare const someString: string;\nexport declare function leftPad(s: string, n: number): string;\nexport declare function multiply(a: number, b: number): number;\n//# sourceMappingURL=index.d.ts.map","-4454971016-export declare const World = \"hello\";\n//# sourceMappingURL=anotherModule.d.ts.map","-9659407152-export declare function getSecondsInDay(): number;\nimport * as mod from '../core/anotherModule';\nexport declare const m: typeof mod;\n","12336236525-import * as c from '../core/index';\r\nimport * as logic from '../logic/index';\r\n\r\nc.leftPad(\"\", 10);\r\nlogic.getSecondsInDay();\r\n\r\nimport * as mod from '../core/anotherModule';\r\nexport const m = mod;\r\n"],"options":{"composite":true,"declaration":true,"skipDefaultLibCheck":true},"fileIdsList":[[3],[2,3,4]],"referencedMap":[[4,1],[5,2]],"exportedModulesMap":[[4,1],[5,2]],"semanticDiagnosticsPerFile":[1,3,2,4,5]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/tests/index.ts": 1,
+ "/user/username/projects/tests/index.js": 1,
+ "/user/username/projects/tests/index.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/core": 4,
+ "/user/username/projects/logic": 2,
+ "/user/username/projects/tests/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/tests/index.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 Project Result:: {}
 Output::
 
+
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 

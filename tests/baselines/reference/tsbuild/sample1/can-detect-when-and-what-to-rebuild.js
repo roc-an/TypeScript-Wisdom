@@ -144,6 +144,57 @@ Output::
 
 exitCode:: ExitStatus.Success
 
+getModifiedTime:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 2,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 2,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/core/tsconfig.json": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 2,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 2,
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/tsconfig.json": 1
+}
+
+setModifiedTime:: {}
+
+fileExists:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 1,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 1,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 1,
+ "/src/tests/tsconfig.tsbuildinfo": 1
+}
+
+directoryExists:: {}
+
 
 
 
@@ -170,6 +221,57 @@ Output::
 [[90m12:04:00 AM[0m] Building project '/src/tests/tsconfig.json'...
 
 exitCode:: ExitStatus.Success
+
+getModifiedTime:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 2,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 2,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/core/tsconfig.json": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 2,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1
+}
+
+setModifiedTime:: {}
+
+fileExists:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 1,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 1,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 1
+}
+
+directoryExists:: {
+ "/src/tests/node_modules/@types": 1,
+ "/src/node_modules/@types": 1,
+ "/node_modules/@types": 1
+}
 
 
 //// [/src/tests/index.d.ts]
@@ -252,6 +354,62 @@ Output::
 [[90m12:07:00 AM[0m] Updating output timestamps of project '/src/tests/tsconfig.json'...
 
 exitCode:: ExitStatus.Success
+
+getModifiedTime:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/index.d.ts": 1,
+ "/src/core/anotherModule.d.ts": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 3,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 3,
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/tsconfig.json": 1
+}
+
+setModifiedTime:: {
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 1,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 1,
+ "/src/tests/tsconfig.tsbuildinfo": 1
+}
+
+fileExists:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/index.d.ts": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 1,
+ "/src/tests/tsconfig.tsbuildinfo": 1
+}
+
+directoryExists:: {
+ "/src/core/node_modules/@types": 1,
+ "/src/node_modules/@types": 1,
+ "/node_modules/@types": 1
+}
 
 
 //// [/src/core/index.d.ts] file written with same contents
@@ -360,6 +518,61 @@ Output::
 [[90m12:10:00 AM[0m] Building project '/src/tests/tsconfig.json'...
 
 exitCode:: ExitStatus.Success
+
+getModifiedTime:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 2,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 2,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/core/tsconfig.json": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 2,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 3,
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/tsconfig.json": 1
+}
+
+setModifiedTime:: {}
+
+fileExists:: {
+ "/src/core/anotherModule.ts": 1,
+ "/src/core/index.ts": 1,
+ "/src/core/some_decl.d.ts": 1,
+ "/src/core/anotherModule.js": 1,
+ "/src/core/anotherModule.d.ts": 1,
+ "/src/core/anotherModule.d.ts.map": 1,
+ "/src/core/index.js": 1,
+ "/src/core/index.d.ts": 1,
+ "/src/core/index.d.ts.map": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
+ "/src/logic/index.ts": 1,
+ "/src/logic/index.js": 1,
+ "/src/logic/index.js.map": 1,
+ "/src/logic/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.ts": 1,
+ "/src/tests/index.js": 1,
+ "/src/tests/index.d.ts": 1,
+ "/src/tests/tsconfig.tsbuildinfo": 1
+}
+
+directoryExists:: {
+ "/src/tests/node_modules/@types": 1,
+ "/src/node_modules/@types": 1,
+ "/node_modules/@types": 1
+}
 
 
 //// [/src/tests/index.d.ts] file written with same contents

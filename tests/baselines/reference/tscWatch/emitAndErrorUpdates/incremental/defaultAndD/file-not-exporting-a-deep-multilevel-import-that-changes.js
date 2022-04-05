@@ -50,6 +50,14 @@ interface String { charAt: any; }
 interface Array<T> { length: number; [n: number]: T; }
 
 
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
+
 /a/lib/tsc.js --w --i
 Output::
 >> Screen clear
@@ -343,6 +351,27 @@ import "./d";
 }
 
 
+fileExists:: {
+ "/user/username/projects/myproject/tsconfig.json": 1,
+ "/user/username/projects/myproject/a.ts": 1,
+ "/user/username/projects/myproject/b.ts": 1,
+ "/user/username/projects/myproject/c.ts": 1,
+ "/user/username/projects/myproject/d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/myproject": 8,
+ "/user/username/projects/myproject/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
+
 Change:: Rename property x2 to x of interface Coords to initialize signatures
 
 Input::
@@ -356,6 +385,14 @@ export interface Coords {
     y: number;
 }
 
+
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
 
 Output::
 >> Screen clear
@@ -533,6 +570,14 @@ export interface Coords {
 }
 
 
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
+
 Change:: Rename property x to x2 of interface Coords to revert back to original text
 
 Input::
@@ -546,6 +591,14 @@ export interface Coords {
     y: number;
 }
 
+
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
 
 Output::
 >> Screen clear
@@ -781,6 +834,14 @@ export interface Coords {
 }
 
 
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
+
 Change:: Rename property x2 to x of interface Coords
 
 Input::
@@ -794,6 +855,14 @@ export interface Coords {
     y: number;
 }
 
+
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 
 
 Output::
 >> Screen clear
@@ -970,3 +1039,11 @@ export interface Coords {
   "size": 1557
 }
 
+
+fileExists:: {} 
+
+directoryExists:: {} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 

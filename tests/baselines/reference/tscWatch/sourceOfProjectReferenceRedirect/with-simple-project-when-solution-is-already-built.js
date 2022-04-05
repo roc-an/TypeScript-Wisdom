@@ -181,6 +181,44 @@ export declare function createDog(): Dog;
 {"program":{"fileNames":["../../../../../../a/lib/lib.d.ts","../../animals/animal.ts","../../animals/index.ts","../core/utilities.d.ts","../../animals/dog.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true},"-14984181202-export type Size = \"small\" | \"medium\" | \"large\";\r\nexport default interface Animal {\r\n    size: Size;\r\n}\r\n","-5382672599-import Animal from './animal';\r\n\r\nexport default Animal;\r\nimport { createDog, Dog } from './dog';\r\nexport { createDog, Dog };\r\n","-11345568166-export declare function makeRandomName(): string;\nexport declare function lastElementOf<T>(arr: T[]): T | undefined;\n","-10991948013-import Animal from '.';\r\nimport { makeRandomName } from '../core/utilities';\r\n\r\nexport interface Dog extends Animal {\r\n    woof(): void;\r\n    name: string;\r\n}\r\n\r\nexport function createDog(): Dog {\r\n    return ({\r\n        size: \"medium\",\r\n        woof: function(this: Dog) {\r\n            console.log(`${this.name} says \"Woof\"!`);\r\n        },\r\n        name: makeRandomName()\r\n    });\r\n}\r\n\r\n"],"options":{"composite":true,"declaration":true,"module":1,"noFallthroughCasesInSwitch":true,"noImplicitReturns":true,"noUnusedLocals":true,"noUnusedParameters":true,"outDir":"./","rootDir":"../../animals","strict":true,"target":1},"fileIdsList":[[3,4],[2,5]],"referencedMap":[[5,1],[3,2]],"exportedModulesMap":[[5,1],[3,2]],"semanticDiagnosticsPerFile":[1,2,5,3,4]},"version":"FakeTSVersion"}
 
 
+fileExists:: {
+ "/user/username/projects/demo/tsconfig-base.json": 2,
+ "/user/username/projects/demo/core/utilities.ts": 1,
+ "/user/username/projects/demo/lib/core/utilities.js": 1,
+ "/user/username/projects/demo/lib/core/utilities.d.ts": 1,
+ "/user/username/projects/demo/animals/animal.ts": 1,
+ "/user/username/projects/demo/animals/dog.ts": 1,
+ "/user/username/projects/demo/animals/index.ts": 1,
+ "/user/username/projects/demo/lib/animals/animal.js": 1,
+ "/user/username/projects/demo/animals/package.json": 1,
+ "/user/username/projects/demo/lib/animals/animal.d.ts": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/demo/core/node_modules/@types": 1,
+ "/user/username/projects/demo/node_modules/@types": 2,
+ "/user/username/projects/node_modules/@types": 2,
+ "/user/username/node_modules/@types": 2,
+ "/user/node_modules/@types": 2,
+ "/node_modules/@types": 2,
+ "/user/username/projects/demo/lib/core": 1,
+ "/user/username/projects/demo/lib": 2,
+ "/user/username/projects/demo": 1,
+ "/user/username/projects/demo/animals": 8,
+ "/user/username/projects/demo/core": 2,
+ "/user/username/projects/demo/animals/node_modules/@types": 1,
+ "/user/username/projects/demo/lib/animals": 1
+} 
+
+getModifiedTimes:: {
+ "/user/username/projects/demo/core/utilities.ts": 1,
+ "/user/username/projects/demo/animals/animal.ts": 1,
+ "/user/username/projects/demo/animals/dog.ts": 1,
+ "/user/username/projects/demo/animals/index.ts": 1
+} 
+
+setModifiedTimes:: {} 
+
 /a/lib/tsc.js --w --p /user/username/projects/demo/animals/tsconfig.json
 Output::
 >> Screen clear
@@ -343,3 +381,21 @@ exitCode:: ExitStatus.undefined
   "size": 2536
 }
 
+
+fileExists:: {
+ "/user/username/projects/demo/tsconfig-base.json": 2,
+ "/user/username/projects/demo/animals/package.json": 1
+} 
+
+directoryExists:: {
+ "/user/username/projects/demo/animals/node_modules/@types": 1,
+ "/user/username/projects/demo/node_modules/@types": 1,
+ "/user/username/projects/node_modules/@types": 1,
+ "/user/username/node_modules/@types": 1,
+ "/user/node_modules/@types": 1,
+ "/node_modules/@types": 1
+} 
+
+getModifiedTimes:: {} 
+
+setModifiedTimes:: {} 

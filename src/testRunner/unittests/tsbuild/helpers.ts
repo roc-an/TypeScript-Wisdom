@@ -309,10 +309,11 @@ interface Symbol {
         sys: System & { writtenFiles: ReadonlyCollection<Path>; },
         originalReadCall?: System["readFile"],
         originalWriteFile?: System["writeFile"],
+        originalFileExists?: System["fileExists"],
     ) {
         const buildInfoPath = getTsBuildInfoEmitOutputFilePath(options);
         if (!buildInfoPath || !sys.writtenFiles.has(toPathWithSystem(sys, buildInfoPath))) return;
-        if (!sys.fileExists(buildInfoPath)) return;
+        if (!(originalFileExists || sys.fileExists).call(sys, buildInfoPath)) return;
 
         const buildInfo = getBuildInfo((originalReadCall || sys.readFile).call(sys, buildInfoPath, "utf8")!);
         generateBuildInfoProgramBaseline(sys, originalWriteFile || sys.writeFile, buildInfoPath, buildInfo);
