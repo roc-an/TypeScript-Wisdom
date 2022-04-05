@@ -61,6 +61,44 @@ directoryExists:: {
 }
 
 
+//// [/src/tsconfig.tsbuildinfo]
+{"program":{"fileNames":["../lib/lib.d.ts","./a.ts","./b.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","signature":false,"affectsGlobalScope":true},{"version":"4646078106-export function foo() { }","signature":false},{"version":"1045484683-export function bar() { }","signature":false}],"options":{"composite":true},"referencedMap":[],"exportedModulesMap":[],"changeFileSet":[1,2,3]},"version":"FakeTSVersion"}
+
+//// [/src/tsconfig.tsbuildinfo.readable.baseline.txt]
+{
+  "program": {
+    "fileNames": [
+      "../lib/lib.d.ts",
+      "./a.ts",
+      "./b.ts"
+    ],
+    "fileInfos": {
+      "../lib/lib.d.ts": {
+        "version": "3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };",
+        "affectsGlobalScope": true
+      },
+      "./a.ts": {
+        "version": "4646078106-export function foo() { }"
+      },
+      "./b.ts": {
+        "version": "1045484683-export function bar() { }"
+      }
+    },
+    "options": {
+      "composite": true
+    },
+    "referencedMap": {},
+    "exportedModulesMap": {},
+    "changeFileSet": [
+      "../lib/lib.d.ts",
+      "./a.ts",
+      "./b.ts"
+    ]
+  },
+  "version": "FakeTSVersion",
+  "size": 834
+}
+
 
 
 Change:: reports syntax errors after change to config file
@@ -235,7 +273,7 @@ exports.bar = bar;
 
 
 //// [/src/tsconfig.tsbuildinfo]
-{"program":{"fileNames":["../lib/lib.d.ts","./a.ts","./b.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true},"9819159940-export function foo() { }export function fooBar() { }","1045484683-export function bar() { }"],"options":{"composite":true,"declaration":true},"referencedMap":[],"exportedModulesMap":[],"semanticDiagnosticsPerFile":[1,2,3]},"version":"FakeTSVersion"}
+{"program":{"fileNames":["../lib/lib.d.ts","./a.ts","./b.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true},{"version":"9819159940-export function foo() { }export function fooBar() { }","signature":"-827728784-export declare function foo(): void;\r\nexport declare function fooBar(): void;\r\n"},{"version":"1045484683-export function bar() { }","signature":"-1357953631-export declare function bar(): void;\r\n"}],"options":{"composite":true,"declaration":true},"referencedMap":[],"exportedModulesMap":[],"semanticDiagnosticsPerFile":[1,2,3]},"version":"FakeTSVersion"}
 
 //// [/src/tsconfig.tsbuildinfo.readable.baseline.txt]
 {
@@ -253,11 +291,11 @@ exports.bar = bar;
       },
       "./a.ts": {
         "version": "9819159940-export function foo() { }export function fooBar() { }",
-        "signature": "9819159940-export function foo() { }export function fooBar() { }"
+        "signature": "-827728784-export declare function foo(): void;\r\nexport declare function fooBar(): void;\r\n"
       },
       "./b.ts": {
         "version": "1045484683-export function bar() { }",
-        "signature": "1045484683-export function bar() { }"
+        "signature": "-1357953631-export declare function bar(): void;\r\n"
       }
     },
     "options": {
@@ -273,6 +311,6 @@ exports.bar = bar;
     ]
   },
   "version": "FakeTSVersion",
-  "size": 816
+  "size": 1016
 }
 

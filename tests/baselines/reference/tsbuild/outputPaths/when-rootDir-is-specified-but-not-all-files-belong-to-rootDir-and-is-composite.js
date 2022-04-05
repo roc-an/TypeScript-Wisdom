@@ -59,6 +59,46 @@ directoryExists:: {
 }
 
 
+//// [/src/tsconfig.tsbuildinfo]
+{"program":{"fileNames":["../lib/lib.d.ts","./src/index.ts","./types/type.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","signature":false,"affectsGlobalScope":true},{"version":"-10726455937-export const x = 10;","signature":false},{"version":"-4885977236-export type t = string;","signature":false}],"options":{"composite":true,"outDir":"./dist","rootDir":"./src"},"referencedMap":[],"exportedModulesMap":[],"changeFileSet":[1,2,3]},"version":"FakeTSVersion"}
+
+//// [/src/tsconfig.tsbuildinfo.readable.baseline.txt]
+{
+  "program": {
+    "fileNames": [
+      "../lib/lib.d.ts",
+      "./src/index.ts",
+      "./types/type.ts"
+    ],
+    "fileInfos": {
+      "../lib/lib.d.ts": {
+        "version": "3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };",
+        "affectsGlobalScope": true
+      },
+      "./src/index.ts": {
+        "version": "-10726455937-export const x = 10;"
+      },
+      "./types/type.ts": {
+        "version": "-4885977236-export type t = string;"
+      }
+    },
+    "options": {
+      "composite": true,
+      "outDir": "./dist",
+      "rootDir": "./src"
+    },
+    "referencedMap": {},
+    "exportedModulesMap": {},
+    "changeFileSet": [
+      "../lib/lib.d.ts",
+      "./src/index.ts",
+      "./types/type.ts"
+    ]
+  },
+  "version": "FakeTSVersion",
+  "size": 883
+}
+
 
 
 Change:: no-change-run
@@ -70,7 +110,7 @@ Output::
 [[90m12:04:00 AM[0m] Projects in this build: 
     * src/tsconfig.json
 
-[[90m12:04:00 AM[0m] Project 'src/tsconfig.json' is out of date because output file 'src/tsconfig.tsbuildinfo' does not exist
+[[90m12:04:00 AM[0m] Project 'src/tsconfig.json' is out of date because buildinfo file 'src/tsconfig.tsbuildinfo' indicates that some of the changes are not emitted
 
 [[90m12:04:00 AM[0m] Building project '/src/tsconfig.json'...
 
@@ -143,7 +183,7 @@ exports.x = 10;
 
 
 //// [/src/tsconfig.tsbuildinfo]
-{"program":{"fileNames":["../lib/lib.d.ts","./src/index.ts","./types/type.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true},"-10726455937-export const x = 10;","-4885977236-export type t = string;"],"options":{"composite":true,"outDir":"./dist","rootDir":"./src"},"referencedMap":[],"exportedModulesMap":[]},"version":"FakeTSVersion"}
+{"program":{"fileNames":["../lib/lib.d.ts","./src/index.ts","./types/type.ts"],"fileInfos":[{"version":"3858781397-/// <reference no-default-lib=\"true\"/>\ninterface Boolean {}\ninterface Function {}\ninterface CallableFunction {}\ninterface NewableFunction {}\ninterface IArguments {}\ninterface Number { toExponential: any; }\ninterface Object {}\ninterface RegExp {}\ninterface String { charAt: any; }\ninterface Array<T> { length: number; [n: number]: T; }\ninterface ReadonlyArray<T> {}\ndeclare const console: { log(msg: any): void; };","affectsGlobalScope":true},{"version":"-10726455937-export const x = 10;","signature":"-6057683066-export declare const x = 10;\r\n"},{"version":"-4885977236-export type t = string;","signature":"-4409762125-export declare type t = string;\r\n"}],"options":{"composite":true,"outDir":"./dist","rootDir":"./src"},"referencedMap":[],"exportedModulesMap":[]},"version":"FakeTSVersion"}
 
 //// [/src/tsconfig.tsbuildinfo.readable.baseline.txt]
 {
@@ -161,11 +201,11 @@ exports.x = 10;
       },
       "./src/index.ts": {
         "version": "-10726455937-export const x = 10;",
-        "signature": "-10726455937-export const x = 10;"
+        "signature": "-6057683066-export declare const x = 10;\r\n"
       },
       "./types/type.ts": {
         "version": "-4885977236-export type t = string;",
-        "signature": "-4885977236-export type t = string;"
+        "signature": "-4409762125-export declare type t = string;\r\n"
       }
     },
     "options": {
@@ -177,7 +217,7 @@ exports.x = 10;
     "exportedModulesMap": {}
   },
   "version": "FakeTSVersion",
-  "size": 781
+  "size": 926
 }
 
 //// [/src/types/type.d.ts]

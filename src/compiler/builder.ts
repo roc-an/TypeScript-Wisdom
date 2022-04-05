@@ -28,7 +28,7 @@ namespace ts {
         /**
          * The map has key by source file's path that has been changed
          */
-        changedFilesSet?: ReadonlySet<Path>;
+        changedFilesSet: ReadonlySet<Path>;
         /**
          * Set of affected files being iterated
          */
@@ -194,11 +194,11 @@ namespace ts {
             }
             const changedFilesSet = oldState!.changedFilesSet;
             if (canCopySemanticDiagnostics) {
-                Debug.assert(!changedFilesSet || !forEachKey(changedFilesSet, path => oldState!.semanticDiagnosticsPerFile!.has(path)), "Semantic diagnostics shouldnt be available for changed files");
+                Debug.assert(!changedFilesSet.size || !forEachKey(changedFilesSet, path => oldState!.semanticDiagnosticsPerFile!.has(path)), "Semantic diagnostics shouldnt be available for changed files");
             }
 
             // Copy old state's changed files set
-            changedFilesSet?.forEach(value => state.changedFilesSet.add(value));
+            changedFilesSet.forEach(value => state.changedFilesSet.add(value));
             if (!outFile(compilerOptions) && oldState!.affectedFilesPendingEmit) {
                 state.affectedFilesPendingEmit = oldState!.affectedFilesPendingEmit.slice();
                 state.affectedFilesPendingEmitKind = oldState!.affectedFilesPendingEmitKind && new Map(oldState!.affectedFilesPendingEmitKind);
@@ -267,7 +267,7 @@ namespace ts {
             });
         }
 
-        state.buildInfoEmitPending = !!state.changedFilesSet.size;
+        state.buildInfoEmitPending = !useOldState || state.changedFilesSet.size !== oldState!.changedFilesSet.size;
         return state;
     }
 
@@ -639,12 +639,13 @@ namespace ts {
         }
         else {
             state.seenAffectedFiles!.add((affected as SourceFile).resolvedPath);
+            // Change in changeSet/affectedFilesPendingEmit, buildInfo needs to be emitted
+            state.buildInfoEmitPending = true;
             if (emitKind !== undefined) {
                 (state.seenEmittedFiles || (state.seenEmittedFiles = new Map())).set((affected as SourceFile).resolvedPath, emitKind);
             }
             if (isPendingEmit) {
                 state.affectedFilesPendingEmitIndex!++;
-                state.buildInfoEmitPending = true;
             }
             else {
                 state.affectedFilesIndex!++;
@@ -735,7 +736,7 @@ namespace ts {
         exportedModulesMap?: ProgramBuildInfoReferencedMap;
         semanticDiagnosticsPerFile?: ProgramBuildInfoDiagnostic[];
         affectedFilesPendingEmit?: ProgramBuilderInfoFilePendingEmit[];
-        hasPendingChange?: boolean;
+        changeFileSet?: readonly ProgramBuildInfoFileId[];
     }
 
     /**
@@ -820,6 +821,13 @@ namespace ts {
             }
         }
 
+        let changeFileSet: ProgramBuildInfoFileId[] | undefined;
+        if (state.changedFilesSet.size) {
+            for (const path of arrayFrom(state.changedFilesSet.keys()).sort(compareStringsCaseSensitive)) {
+                    (changeFileSet ||= []).push(toFileId(path));
+            }
+        }
+
         return {
             fileNames,
             fileInfos,
@@ -829,7 +837,7 @@ namespace ts {
             exportedModulesMap,
             semanticDiagnosticsPerFile,
             affectedFilesPendingEmit,
-            hasPendingChange: state.changedFilesSet?.size ? true : undefined,
+            changeFileSet,
         };
 
         function relativeToBuildInfoEnsuringAbsolutePath(path: string) {
@@ -1292,6 +1300,7 @@ namespace ts {
             affectedFilesPendingEmit: map(program.affectedFilesPendingEmit, value => toFilePath(value[0])),
             affectedFilesPendingEmitKind: program.affectedFilesPendingEmit && arrayToMap(program.affectedFilesPendingEmit, value => toFilePath(value[0]), value => value[1]),
             affectedFilesPendingEmitIndex: program.affectedFilesPendingEmit && 0,
+            changedFilesSet: new Set(map(program.changeFileSet, toFilePath)),
         };
         return {
             getState: () => state,
