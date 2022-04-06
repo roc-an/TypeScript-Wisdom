@@ -524,16 +524,31 @@ namespace ts {
         return newSignature !== oldSignature;
     }
 
-    function forEachKeyOfExportedModulesMap(state: BuilderProgramState, filePath: Path, fn: (exportedFromPath: Path) => void) {
+    function forEachKeyOfExportedModulesMap<T>(state: BuilderProgramState, filePath: Path, fn: (exportedFromPath: Path) => T | undefined): T | undefined {
         // Go through exported modules from cache first
-        state.currentAffectedFilesExportedModulesMap!.getKeys(filePath)?.forEach(fn);
+        let keys = state.currentAffectedFilesExportedModulesMap!.getKeys(filePath);
+        const result = keys && forEachKey(keys, fn);
+        if (result) return result;
+
         // If exported from path is not from cache and exported modules has path, all files referencing file exported from are affected
-        state.exportedModulesMap!.getKeys(filePath)?.forEach(exportedFromPath =>
+        keys = state.exportedModulesMap!.getKeys(filePath);
+        return keys && forEachKey(keys, exportedFromPath =>
             // If the cache had an updated value, skip
             !state.currentAffectedFilesExportedModulesMap!.hasKey(exportedFromPath) &&
-            !state.currentAffectedFilesExportedModulesMap!.deletedKeys()?.has(exportedFromPath) &&
-            fn(exportedFromPath)
+            !state.currentAffectedFilesExportedModulesMap!.deletedKeys()?.has(exportedFromPath) ?
+                fn(exportedFromPath) :
+                undefined
         );
+    }
+
+    function handleDtsMayChangeOfGlobalScope(state: BuilderProgramState, filePath: Path, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash): boolean {
+        if (!state.fileInfos.get(filePath)?.affectsGlobalScope) return false;
+        // Every file needs to be handled
+        BuilderState.getAllFilesExcludingDefaultLibraryFile(state, state.program!, /*firstSourceFile*/ undefined).forEach(
+            file => handleDtsMayChangeOf(state, file.resolvedPath, cancellationToken, computeHash)
+        );
+        removeDiagnosticsOfLibraryFiles(state);
+        return true;
     }
 
     /**
@@ -556,6 +571,7 @@ namespace ts {
                 if (!seenFileNamesMap.has(currentPath)) {
                     seenFileNamesMap.set(currentPath, true);
                     handleDtsMayChangeOf(state, currentPath, cancellationToken, computeHash);
+                    if (handleDtsMayChangeOfGlobalScope(state, currentPath, cancellationToken, computeHash)) return;
                     if (isChangedSignature(state, currentPath)) {
                         const currentSourceFile = Debug.checkDefined(state.program).getSourceFileByPath(currentPath)!;
                         queue.push(...BuilderState.getReferencedByPaths(state, currentSourceFile.resolvedPath));
@@ -568,19 +584,23 @@ namespace ts {
         const seenFileAndExportsOfFile = new Set<string>();
         // Go through exported modules from cache first
         // If exported modules has path, all files referencing file exported from are affected
-        forEachKeyOfExportedModulesMap(state, affectedFile.resolvedPath, exportedFromPath =>
-            state.referencedMap!.getKeys(exportedFromPath)?.forEach(filePath =>
+        forEachKeyOfExportedModulesMap(state, affectedFile.resolvedPath, exportedFromPath => {
+            if (handleDtsMayChangeOfGlobalScope(state, exportedFromPath, cancellationToken, computeHash)) return true;
+            const references = state.referencedMap!.getKeys(exportedFromPath);
+            return references && forEachKey(references, filePath =>
                 handleDtsMayChangeOfFileAndExportsOfFile(state, filePath, seenFileAndExportsOfFile, cancellationToken, computeHash)
-            )
-        );
+            );
+        });
     }
 
     /**
      * handle dts and semantic diagnostics on file and iterate on anything that exports this file
+     * return true when all work is done and we can exit handling dts emit and semantic diagnostics
      */
-    function handleDtsMayChangeOfFileAndExportsOfFile(state: BuilderProgramState, filePath: Path, seenFileAndExportsOfFile: Set<string>, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash): void {
-        if (!tryAddToSet(seenFileAndExportsOfFile, filePath)) return;
+    function handleDtsMayChangeOfFileAndExportsOfFile(state: BuilderProgramState, filePath: Path, seenFileAndExportsOfFile: Set<string>, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash): boolean | undefined {
+        if (!tryAddToSet(seenFileAndExportsOfFile, filePath)) return undefined;
 
+        if (handleDtsMayChangeOfGlobalScope(state, filePath, cancellationToken, computeHash)) return true;
         handleDtsMayChangeOf(state, filePath, cancellationToken, computeHash);
         Debug.assert(!!state.currentAffectedFilesExportedModulesMap);
 
@@ -594,6 +614,7 @@ namespace ts {
             !seenFileAndExportsOfFile.has(referencingFilePath) && // Not already removed diagnostic file
             handleDtsMayChangeOf(state, referencingFilePath, cancellationToken, computeHash) // Dont add to seen since this is not yet done with the export removal
         );
+        return undefined;
     }
 
     /**
