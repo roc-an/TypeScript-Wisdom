@@ -429,6 +429,19 @@ namespace ts {
         return undefined;
     }
 
+    function removeDiagnosticsOfLibraryFiles(state: BuilderProgramState) {
+        if (!state.cleanedDiagnosticsOfLibFiles) {
+            state.cleanedDiagnosticsOfLibFiles = true;
+            const program = Debug.checkDefined(state.program);
+            const options = program.getCompilerOptions();
+            forEach(program.getSourceFiles(), f =>
+                program.isSourceFileDefaultLibrary(f) &&
+                !skipTypeChecking(f, options, program) &&
+                removeSemanticDiagnosticsOf(state, f.resolvedPath)
+            );
+        }
+    }
+
     /**
      *  Handles semantic diagnostics and dts emit for affectedFile and files, that are referencing modules that export entities from affected file
      *  This is because even though js emit doesnt change, dts emit / type used can change resulting in need for dts emit and js change
@@ -438,16 +451,7 @@ namespace ts {
 
         // If affected files is everything except default library, then nothing more to do
         if (state.allFilesExcludingDefaultLibraryFile === state.affectedFiles) {
-            if (!state.cleanedDiagnosticsOfLibFiles) {
-                state.cleanedDiagnosticsOfLibFiles = true;
-                const program = Debug.checkDefined(state.program);
-                const options = program.getCompilerOptions();
-                forEach(program.getSourceFiles(), f =>
-                    program.isSourceFileDefaultLibrary(f) &&
-                    !skipTypeChecking(f, options, program) &&
-                    removeSemanticDiagnosticsOf(state, f.resolvedPath)
-                );
-            }
+            removeDiagnosticsOfLibraryFiles(state);
             // When a change affects the global scope, all files are considered to be affected without updating their signature
             // That means when affected file is handled, its signature can be out of date
             // To avoid this, ensure that we update the signature for any affected file in this scenario.
@@ -462,13 +466,9 @@ namespace ts {
             );
             return;
         }
-        else {
-            Debug.assert(state.hasCalledUpdateShapeSignature.has(affectedFile.resolvedPath) || state.currentAffectedFilesSignatures?.has(affectedFile.resolvedPath), `Signature not updated for affected file: ${affectedFile.fileName}`);
-        }
-
-        if (!state.compilerOptions.assumeChangesOnlyAffectDirectDependencies) {
-            forEachReferencingModulesOfExportOfAffectedFile(state, affectedFile, (state, path) => handleDtsMayChangeOf(state, path, cancellationToken, computeHash));
-        }
+        Debug.assert(state.hasCalledUpdateShapeSignature.has(affectedFile.resolvedPath) || state.currentAffectedFilesSignatures?.has(affectedFile.resolvedPath), `Signature not updated for affected file: ${affectedFile.fileName}`);
+        if (state.compilerOptions.assumeChangesOnlyAffectDirectDependencies) return;
+        handleDtsMayChangeOfReferencingExportOfAffectedFile(state, affectedFile, cancellationToken, computeHash);
     }
 
     /**
@@ -525,15 +525,12 @@ namespace ts {
     }
 
     /**
-     * Iterate on referencing modules that export entities from affected file
+     * Iterate on referencing modules that export entities from affected file and delete diagnostics and add pending emit
      */
-    function forEachReferencingModulesOfExportOfAffectedFile(state: BuilderProgramState, affectedFile: SourceFile, fn: (state: BuilderProgramState, filePath: Path) => void) {
+    function handleDtsMayChangeOfReferencingExportOfAffectedFile(state: BuilderProgramState, affectedFile: SourceFile, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash) {
         // If there was change in signature (dts output) for the changed file,
         // then only we need to handle pending file emit
-        if (!state.exportedModulesMap || !state.changedFilesSet.has(affectedFile.resolvedPath)) {
-            return;
-        }
-
+        if (!state.exportedModulesMap || !state.changedFilesSet.has(affectedFile.resolvedPath)) return;
         if (!isChangedSignature(state, affectedFile.resolvedPath)) return;
 
         // Since isolated modules dont change js files, files affected by change in signature is itself
@@ -546,7 +543,7 @@ namespace ts {
                 const currentPath = queue.pop()!;
                 if (!seenFileNamesMap.has(currentPath)) {
                     seenFileNamesMap.set(currentPath, true);
-                    fn(state, currentPath);
+                    handleDtsMayChangeOf(state, currentPath, cancellationToken, computeHash);
                     if (isChangedSignature(state, currentPath)) {
                         const currentSourceFile = Debug.checkDefined(state.program).getSourceFileByPath(currentPath)!;
                         queue.push(...BuilderState.getReferencedByPaths(state, currentSourceFile.resolvedPath));
@@ -556,12 +553,11 @@ namespace ts {
         }
 
         Debug.assert(!!state.currentAffectedFilesExportedModulesMap);
-
         const seenFileAndExportsOfFile = new Set<string>();
         // Go through exported modules from cache first
         // If exported modules has path, all files referencing file exported from are affected
         state.currentAffectedFilesExportedModulesMap.getKeys(affectedFile.resolvedPath)?.forEach(exportedFromPath =>
-            forEachFilesReferencingPath(state, exportedFromPath, seenFileAndExportsOfFile, fn)
+            handleDtsMayChangeOfFilesReferencingPath(state, exportedFromPath, seenFileAndExportsOfFile, cancellationToken, computeHash)
         );
 
         // If exported from path is not from cache and exported modules has path, all files referencing file exported from are affected
@@ -569,34 +565,31 @@ namespace ts {
             // If the cache had an updated value, skip
             !state.currentAffectedFilesExportedModulesMap!.hasKey(exportedFromPath) &&
             !state.currentAffectedFilesExportedModulesMap!.deletedKeys()?.has(exportedFromPath) &&
-            forEachFilesReferencingPath(state, exportedFromPath, seenFileAndExportsOfFile, fn)
+            handleDtsMayChangeOfFilesReferencingPath(state, exportedFromPath, seenFileAndExportsOfFile, cancellationToken, computeHash)
         );
     }
 
     /**
-     * Iterate on files referencing referencedPath
+     * Iterate on files referencing referencedPath and handle the dts emit and semantic diagnostics of the file
      */
-    function forEachFilesReferencingPath(state: BuilderProgramState, referencedPath: Path, seenFileAndExportsOfFile: Set<string>, fn: (state: BuilderProgramState, filePath: Path) => void): void {
+    function handleDtsMayChangeOfFilesReferencingPath(state: BuilderProgramState, referencedPath: Path, seenFileAndExportsOfFile: Set<string>, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash): void {
         state.referencedMap!.getKeys(referencedPath)?.forEach(filePath =>
-            forEachFileAndExportsOfFile(state, filePath, seenFileAndExportsOfFile, fn)
+            handleDtsMayChangeOfFileAndExportsOfFile(state, filePath, seenFileAndExportsOfFile, cancellationToken, computeHash)
         );
     }
 
     /**
      * fn on file and iterate on anything that exports this file
      */
-    function forEachFileAndExportsOfFile(state: BuilderProgramState, filePath: Path, seenFileAndExportsOfFile: Set<string>, fn: (state: BuilderProgramState, filePath: Path) => void): void {
-        if (!tryAddToSet(seenFileAndExportsOfFile, filePath)) {
-            return;
-        }
+    function handleDtsMayChangeOfFileAndExportsOfFile(state: BuilderProgramState, filePath: Path, seenFileAndExportsOfFile: Set<string>, cancellationToken: CancellationToken | undefined, computeHash: BuilderState.ComputeHash): void {
+        if (!tryAddToSet(seenFileAndExportsOfFile, filePath)) return;
 
-        fn(state, filePath);
-
+        handleDtsMayChangeOf(state, filePath, cancellationToken, computeHash);
         Debug.assert(!!state.currentAffectedFilesExportedModulesMap);
         // Go through exported modules from cache first
         // If exported modules has path, all files referencing file exported from are affected
         state.currentAffectedFilesExportedModulesMap.getKeys(filePath)?.forEach(exportedFromPath =>
-            forEachFileAndExportsOfFile(state, exportedFromPath, seenFileAndExportsOfFile, fn)
+            handleDtsMayChangeOfFileAndExportsOfFile(state, exportedFromPath, seenFileAndExportsOfFile, cancellationToken, computeHash)
         );
 
         // If exported from path is not from cache and exported modules has path, all files referencing file exported from are affected
@@ -604,13 +597,13 @@ namespace ts {
             // If the cache had an updated value, skip
             !state.currentAffectedFilesExportedModulesMap!.hasKey(exportedFromPath) &&
             !state.currentAffectedFilesExportedModulesMap!.deletedKeys()?.has(exportedFromPath) &&
-            forEachFileAndExportsOfFile(state, exportedFromPath, seenFileAndExportsOfFile, fn)
+            handleDtsMayChangeOfFileAndExportsOfFile(state, exportedFromPath, seenFileAndExportsOfFile, cancellationToken, computeHash)
         );
 
         // Remove diagnostics of files that import this file (without going to exports of referencing files)
         state.referencedMap!.getKeys(filePath)?.forEach(referencingFilePath =>
             !seenFileAndExportsOfFile.has(referencingFilePath) && // Not already removed diagnostic file
-            fn(state, referencingFilePath) // Dont add to seen since this is not yet done with the export removal
+            handleDtsMayChangeOf(state, referencingFilePath, cancellationToken, computeHash) // Dont add to seen since this is not yet done with the export removal
         );
     }
 
