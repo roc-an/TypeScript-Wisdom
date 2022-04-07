@@ -214,6 +214,7 @@ namespace ts {
         originalWriteFile: CompilerHost["writeFile"] | undefined;
         originalReadFileWithCache: CompilerHost["readFile"];
         originalGetSourceFile: CompilerHost["getSourceFile"];
+        buildInfoCache: ESMap<Path, BuildInfo | false>;
     }
 
     interface FileWatcherWithModifiedTime {
@@ -286,7 +287,7 @@ namespace ts {
 
         // State of the solution
         const baseCompilerOptions = getCompilerOptionsOfBuildOptions(options);
-        const compilerHost = createCompilerHostFromProgramHost(host, () => state.projectCompilerOptions);
+        const compilerHost = createCompilerHostFromProgramHost(host, () => state.projectCompilerOptions) as CompilerHost & ReadBuildProgramHost;
         setGetSourceFileAsHashVersioned(compilerHost, host);
         compilerHost.getParsedCommandLine = fileName => parseConfigFile(state, fileName as ResolvedConfigFileName, toResolvedConfigFilePath(state, fileName as ResolvedConfigFileName));
         compilerHost.resolveModuleNames = maybeBind(host, host.resolveModuleNames);
@@ -304,6 +305,7 @@ namespace ts {
             compilerHost.resolveTypeReferenceDirectives = (typeReferenceDirectiveNames, containingFile, redirectedReference, _options, containingFileMode) =>
                 loadWithTypeDirectiveCache<ResolvedTypeReferenceDirective>(Debug.checkEachDefined(typeReferenceDirectiveNames), containingFile, redirectedReference, containingFileMode, loader);
         }
+        compilerHost.getBuildInfo = fileName => getBuildInfo(state, fileName);
 
         const { watchFile, watchDirectory, writeLog } = createWatchFactory<ResolvedConfigFileName>(hostWithWatch, options);
 
@@ -577,6 +579,7 @@ namespace ts {
             originalWriteFile,
             originalReadFileWithCache,
             originalGetSourceFile,
+            buildInfoCache: new Map(),
         };
     }
 
@@ -990,7 +993,9 @@ namespace ts {
                     }
                 }
 
-                emittedOutputs.set(toPath(state, name), name);
+                const path = toPath(state, name);
+                emittedOutputs.set(path, name);
+                state.cache?.buildInfoCache.delete(path);
                 writeFile(writeFileCallback ? { writeFile: writeFileCallback } : compilerHost, emitterDiagnostics, name, text, writeByteOrderMark);
             });
 
@@ -1007,7 +1012,12 @@ namespace ts {
         function emitBuildInfo(writeFileCallback?: WriteFileCallback, cancellationToken?: CancellationToken): EmitResult {
             Debug.assertIsDefined(program);
             Debug.assert(step === BuildStep.EmitBuildInfo);
-            const emitResult = program.emitBuildInfo(writeFileCallback, cancellationToken);
+            const emitResult = program.emitBuildInfo((name, data, writeByteOrderMark, onError, sourceFiles) => {
+                const path = toPath(state, name);
+                state.cache?.buildInfoCache.delete(path);
+                if (writeFileCallback) writeFileCallback(name, data, writeByteOrderMark, onError, sourceFiles);
+                else state.compilerHost.writeFile(name, data, writeByteOrderMark, onError, sourceFiles);
+            }, cancellationToken);
             if (emitResult.diagnostics.length) {
                 reportErrors(state, emitResult.diagnostics);
                 state.diagnostics.set(projectPath, [...state.diagnostics.get(projectPath)!, ...emitResult.diagnostics]);
@@ -1105,7 +1115,9 @@ namespace ts {
             const emitterDiagnostics = createDiagnosticCollection();
             const emittedOutputs = new Map<Path, string>();
             outputFiles.forEach(({ name, text, writeByteOrderMark }) => {
-                emittedOutputs.set(toPath(state, name), name);
+                const path = toPath(state, name);
+                emittedOutputs.set(path, name);
+                state.cache?.buildInfoCache.delete(path);
                 writeFile(writeFileCallback ? { writeFile: writeFileCallback } : compilerHost, emitterDiagnostics, name, text, writeByteOrderMark);
             });
 
@@ -1394,6 +1406,16 @@ namespace ts {
         };
     }
 
+    function getBuildInfo(state: SolutionBuilderState, buildInfoPath: string): BuildInfo | undefined {
+        const path = toPath(state, buildInfoPath);
+        const existing = state.cache?.buildInfoCache.get(path);
+        if (existing !== undefined) return existing || undefined;
+        const value = state.readFileWithCache(buildInfoPath);
+        const buildInfo = value ? ts.getBuildInfo(value) : undefined;
+        state.cache?.buildInfoCache.set(path, buildInfo || false);
+        return buildInfo;
+    }
+
     function checkConfigFileUpToDateStatus(state: SolutionBuilderState, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string): Status.OutOfDateWithSelf | undefined {
         // Check tsconfig time
         const tsconfigTime = getModifiedTime(state, configFile);
@@ -1476,43 +1498,93 @@ namespace ts {
 
         if (force) return { type: UpToDateStatusType.ForceBuild };
 
-        // Collect the expected outputs of this project
-        const outputs = getAllProjectOutputs(project, !host.useCaseSensitiveFileNames());
-
+        const buildInfoPath = getTsBuildInfoEmitOutputFilePath(project.options);
         // Now see if all outputs are newer than the newest input
         let oldestOutputFileName = "(none)";
         let oldestOutputFileTime = maximumDate;
         let newestDeclarationFileContentChangedTime;
-        for (const output of outputs) {
-            // Output is missing; can stop checking
-            const outputTime = ts.getModifiedTime(host, output);
+        let buildInfo: BuildInfo | undefined;
+        if (buildInfoPath) {
+            const outputTime = ts.getModifiedTime(host, buildInfoPath);
             if (outputTime === missingFileModifiedTime) {
                 return {
                     type: UpToDateStatusType.OutputMissing,
-                    missingOutputFileName: output
+                    missingOutputFileName: buildInfoPath
                 };
             }
 
-            if (outputTime < oldestOutputFileTime) {
-                oldestOutputFileTime = outputTime;
-                oldestOutputFileName = output;
+            buildInfo = Debug.checkDefined(getBuildInfo(state, buildInfoPath));
+            if (!state.buildInfoChecked.has(resolvedPath)) {
+                state.buildInfoChecked.set(resolvedPath, true);
+                if (buildInfo && (buildInfo.bundle || buildInfo.program) && buildInfo.version !== version) {
+                    return {
+                        type: UpToDateStatusType.TsVersionOutputOfDate,
+                        version: buildInfo.version
+                    };
+                }
             }
 
             // If an output is older than the newest input, we can stop checking
             if (outputTime < newestInputFileTime) {
                 return {
                     type: UpToDateStatusType.OutOfDateWithSelf,
-                    outOfDateOutputFileName: oldestOutputFileName,
+                    outOfDateOutputFileName: buildInfoPath,
                     newerInputFileName: newestInputFileName
                 };
             }
 
-            // Keep track of when the most recent time a .d.ts file was changed.
-            // In addition to file timestamps, we also keep track of when a .d.ts file
-            // had its file touched but not had its contents changed - this allows us
-            // to skip a downstream typecheck
-            if (isDeclarationFile(output)) {
-                newestDeclarationFileContentChangedTime = newer(newestDeclarationFileContentChangedTime, outputTime);
+            if (buildInfo.program) {
+                if (buildInfo.program.hasPendingChange ||
+                    (!buildInfo.program.options?.noEmit && buildInfo.program.affectedFilesPendingEmit?.length)) {
+                    return {
+                        type: UpToDateStatusType.OutOfDateBuildInfo,
+                        buildInfoFile: buildInfoPath
+                    };
+                }
+            }
+
+            oldestOutputFileTime = outputTime;
+            oldestOutputFileName = buildInfoPath;
+        }
+
+        // Dont check output timestamps if we have buildinfo telling us output is uptodate
+        if (!buildInfo?.program) {
+            // Collect the expected outputs of this project
+            const outputs = getAllProjectOutputs(project, !host.useCaseSensitiveFileNames());
+            // const buildInfoDirectory = buildInfoPath ? getDirectoryPath(getNormalizedAbsolutePath(buildInfoPath, host.getCurrentDirectory())) : undefined;
+            // const getCanonicalFileName = createGetCanonicalFileName(host.useCaseSensitiveFileNames());
+            for (const output of outputs) {
+                if (buildInfoPath === output) continue;
+                // Output is missing; can stop checking
+                const outputTime = ts.getModifiedTime(state.host, output);
+                if (outputTime === missingFileModifiedTime) {
+                    return {
+                        type: UpToDateStatusType.OutputMissing,
+                        missingOutputFileName: output
+                    };
+                }
+
+                if (outputTime < oldestOutputFileTime) {
+                    oldestOutputFileTime = outputTime;
+                    oldestOutputFileName = output;
+                }
+
+                // If an output is older than the newest input, we can stop checking
+                if (outputTime < newestInputFileTime) {
+                    return {
+                        type: UpToDateStatusType.OutOfDateWithSelf,
+                        outOfDateOutputFileName: oldestOutputFileName,
+                        newerInputFileName: newestInputFileName
+                    };
+                }
+
+                // Keep track of when the most recent time a .d.ts file was changed.
+                // In addition to file timestamps, we also keep track of when a .d.ts file
+                // had its file touched but not had its contents changed - this allows us
+                // to skip a downstream typecheck
+                if (isDeclarationFile(output)) {
+                    newestDeclarationFileContentChangedTime = newer(newestDeclarationFileContentChangedTime, outputTime);
+                }
             }
         }
 
@@ -1560,21 +1632,6 @@ namespace ts {
             ([path]) => checkConfigFileUpToDateStatus(state, path, oldestOutputFileTime, oldestOutputFileName)
         );
         if (dependentPackageFileStatus) return dependentPackageFileStatus;
-
-        if (!state.buildInfoChecked.has(resolvedPath)) {
-            state.buildInfoChecked.set(resolvedPath, true);
-            const buildInfoPath = getTsBuildInfoEmitOutputFilePath(project.options);
-            if (buildInfoPath) {
-                const value = state.readFileWithCache(buildInfoPath);
-                const buildInfo = value && getBuildInfo(value);
-                if (buildInfo && (buildInfo.bundle || buildInfo.program) && buildInfo.version !== version) {
-                    return {
-                        type: UpToDateStatusType.TsVersionOutputOfDate,
-                        version: buildInfo.version
-                    };
-                }
-            }
-        }
 
         if (usesPrepend && pseudoUpToDate) {
             return {
@@ -2106,6 +2163,13 @@ namespace ts {
                     Diagnostics.Project_0_is_out_of_date_because_output_file_1_does_not_exist,
                     relName(state, configFileName),
                     relName(state, status.missingOutputFileName)
+                );
+            case UpToDateStatusType.OutOfDateBuildInfo:
+                return reportStatus(
+                    state,
+                    Diagnostics.Project_0_is_out_of_date_because_buildinfo_file_1_indicates_that_some_of_the_changes_are_not_emitted,
+                    relName(state, configFileName),
+                    relName(state, status.buildInfoFile)
                 );
             case UpToDateStatusType.UpToDate:
                 if (status.newestInputFileTime !== undefined) {

@@ -51,7 +51,7 @@ Output::
 [[90m12:01:00 AM[0m] Projects in this build: 
     * src/tsconfig.json
 
-[[90m12:01:00 AM[0m] Project 'src/tsconfig.json' is out of date because output file 'src/src/hkt.js' does not exist
+[[90m12:01:00 AM[0m] Project 'src/tsconfig.json' is out of date because output file 'src/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:01:00 AM[0m] Building project '/src/tsconfig.json'...
 
@@ -61,7 +61,7 @@ getModifiedTime:: {
  "/src/src/globals.d.ts": 1,
  "/src/src/hkt.ts": 1,
  "/src/src/main.ts": 1,
- "/src/src/hkt.js": 1
+ "/src/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {}
@@ -177,7 +177,7 @@ Output::
 [[90m12:04:00 AM[0m] Projects in this build: 
     * src/tsconfig.json
 
-[[90m12:04:00 AM[0m] Project 'src/tsconfig.json' is out of date because oldest output 'src/src/hkt.js' is older than newest input 'src/src/main.ts'
+[[90m12:04:00 AM[0m] Project 'src/tsconfig.json' is out of date because oldest output 'src/tsconfig.tsbuildinfo' is older than newest input 'src/src/main.ts'
 
 [[90m12:04:00 AM[0m] Building project '/src/tsconfig.json'...
 
@@ -189,7 +189,7 @@ getModifiedTime:: {
  "/src/src/globals.d.ts": 1,
  "/src/src/hkt.ts": 1,
  "/src/src/main.ts": 1,
- "/src/src/hkt.js": 1
+ "/src/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {
@@ -301,7 +301,7 @@ Output::
 [[90m12:07:00 AM[0m] Projects in this build: 
     * src/tsconfig.json
 
-[[90m12:07:00 AM[0m] Project 'src/tsconfig.json' is out of date because oldest output 'src/src/hkt.js' is older than newest input 'src/src/main.ts'
+[[90m12:07:00 AM[0m] Project 'src/tsconfig.json' is out of date because oldest output 'src/tsconfig.tsbuildinfo' is older than newest input 'src/src/main.ts'
 
 [[90m12:07:00 AM[0m] Building project '/src/tsconfig.json'...
 
@@ -313,7 +313,7 @@ getModifiedTime:: {
  "/src/src/globals.d.ts": 1,
  "/src/src/hkt.ts": 1,
  "/src/src/main.ts": 1,
- "/src/src/hkt.js": 1
+ "/src/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {

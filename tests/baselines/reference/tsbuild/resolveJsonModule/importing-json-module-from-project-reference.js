@@ -84,7 +84,7 @@ lib/lib.d.ts
   Default library for target 'es5'
 src/strings/foo.json
   Matched by include pattern 'foo.json' in 'src/strings/tsconfig.json'
-[[90m12:01:00 AM[0m] Project 'src/main/tsconfig.json' is out of date because output file 'src/main/index.js' does not exist
+[[90m12:01:00 AM[0m] Project 'src/main/tsconfig.json' is out of date because output file 'src/main/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:01:00 AM[0m] Building project '/src/main/tsconfig.json'...
 
@@ -100,7 +100,7 @@ getModifiedTime:: {
  "/src/strings/foo.json": 1,
  "/src/strings/tsconfig.tsbuildinfo": 1,
  "/src/main/index.ts": 1,
- "/src/main/index.js": 1
+ "/src/main/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {}
@@ -250,7 +250,7 @@ Output::
 
 [[90m12:04:00 AM[0m] Project 'src/strings/tsconfig.json' is up to date because newest input 'src/strings/foo.json' is older than oldest output 'src/strings/tsconfig.tsbuildinfo'
 
-[[90m12:04:00 AM[0m] Project 'src/main/tsconfig.json' is up to date because newest input 'src/main/index.ts' is older than oldest output 'src/main/index.js'
+[[90m12:04:00 AM[0m] Project 'src/main/tsconfig.json' is up to date because newest input 'src/main/index.ts' is older than oldest output 'src/main/tsconfig.tsbuildinfo'
 
 exitCode:: ExitStatus.Success
 
@@ -260,8 +260,6 @@ getModifiedTime:: {
  "/src/strings/tsconfig.json": 1,
  "/src/tsconfig.json": 2,
  "/src/main/index.ts": 1,
- "/src/main/index.js": 1,
- "/src/main/index.d.ts": 1,
  "/src/main/tsconfig.tsbuildinfo": 1,
  "/src/main/tsconfig.json": 1
 }

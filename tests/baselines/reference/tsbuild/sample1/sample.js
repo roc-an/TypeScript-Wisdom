@@ -103,15 +103,15 @@ Output::
     * src/logic/tsconfig.json
     * src/tests/tsconfig.json
 
-[[90m12:01:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because output file 'src/core/anotherModule.js' does not exist
+[[90m12:01:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because output file 'src/core/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:01:00 AM[0m] Building project '/src/core/tsconfig.json'...
 
-[[90m12:01:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because output file 'src/logic/index.js' does not exist
+[[90m12:01:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because output file 'src/logic/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:01:00 AM[0m] Building project '/src/logic/tsconfig.json'...
 
-[[90m12:01:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because output file 'src/tests/index.js' does not exist
+[[90m12:01:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because output file 'src/tests/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:01:00 AM[0m] Building project '/src/tests/tsconfig.json'...
 
@@ -137,11 +137,11 @@ getModifiedTime:: {
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/anotherModule.js": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/logic/index.ts": 1,
- "/src/logic/index.js": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
  "/src/tests/index.ts": 1,
- "/src/tests/index.js": 1
+ "/src/tests/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {}
@@ -731,17 +731,17 @@ Output::
     * src/logic/tsconfig.json
     * src/tests/tsconfig.json
 
-[[90m12:04:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because oldest output 'src/core/anotherModule.js' is older than newest input 'src/core/index.ts'
+[[90m12:04:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because oldest output 'src/core/tsconfig.tsbuildinfo' is older than newest input 'src/core/index.ts'
 
 [[90m12:04:00 AM[0m] Building project '/src/core/tsconfig.json'...
 
 [[90m12:04:00 AM[0m] Updating unchanged output timestamps of project '/src/core/tsconfig.json'...
 
-[[90m12:04:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because oldest output 'src/logic/index.js' is older than newest input 'src/core'
+[[90m12:04:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because oldest output 'src/logic/tsconfig.tsbuildinfo' is older than newest input 'src/core'
 
 [[90m12:04:00 AM[0m] Building project '/src/logic/tsconfig.json'...
 
-[[90m12:04:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because oldest output 'src/tests/index.js' is older than newest input 'src/core'
+[[90m12:04:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because oldest output 'src/tests/tsconfig.tsbuildinfo' is older than newest input 'src/core'
 
 [[90m12:04:00 AM[0m] Building project '/src/tests/tsconfig.json'...
 
@@ -767,16 +767,13 @@ getModifiedTime:: {
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/anotherModule.js": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/logic/index.ts": 1,
- "/src/logic/index.js": 1,
- "/src/logic/index.js.map": 1,
- "/src/logic/index.d.ts": 2,
  "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/index.d.ts": 1,
  "/src/tests/index.ts": 1,
- "/src/tests/index.js": 1,
- "/src/tests/index.d.ts": 2,
- "/src/tests/tsconfig.tsbuildinfo": 1
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.d.ts": 1
 }
 
 setModifiedTime:: {
@@ -1193,7 +1190,7 @@ Output::
     * src/logic/tsconfig.json
     * src/tests/tsconfig.json
 
-[[90m12:07:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because oldest output 'src/core/anotherModule.js' is older than newest input 'src/core/index.ts'
+[[90m12:07:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because oldest output 'src/core/tsconfig.tsbuildinfo' is older than newest input 'src/core/index.ts'
 
 [[90m12:07:00 AM[0m] Building project '/src/core/tsconfig.json'...
 
@@ -1224,20 +1221,17 @@ getModifiedTime:: {
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/anotherModule.js": 1,
+ "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/core/index.d.ts": 1,
  "/src/core/anotherModule.d.ts": 1,
  "/src/logic/index.ts": 1,
- "/src/logic/index.js": 1,
- "/src/logic/index.js.map": 1,
- "/src/logic/index.d.ts": 2,
  "/src/logic/tsconfig.tsbuildinfo": 1,
  "/src/logic/tsconfig.json": 1,
+ "/src/logic/index.d.ts": 1,
  "/src/tests/index.ts": 1,
- "/src/tests/index.js": 1,
- "/src/tests/index.d.ts": 2,
  "/src/tests/tsconfig.tsbuildinfo": 1,
- "/src/tests/tsconfig.json": 1
+ "/src/tests/tsconfig.json": 1,
+ "/src/tests/index.d.ts": 1
 }
 
 setModifiedTime:: {
@@ -1371,13 +1365,13 @@ Output::
     * src/logic/tsconfig.json
     * src/tests/tsconfig.json
 
-[[90m12:10:00 AM[0m] Project 'src/core/tsconfig.json' is up to date because newest input 'src/core/index.ts' is older than oldest output 'src/core/anotherModule.js'
+[[90m12:10:00 AM[0m] Project 'src/core/tsconfig.json' is up to date because newest input 'src/core/index.ts' is older than oldest output 'src/core/tsconfig.tsbuildinfo'
 
-[[90m12:10:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because output file 'src/logic/decls/index.d.ts' does not exist
+[[90m12:10:00 AM[0m] Project 'src/logic/tsconfig.json' is out of date because oldest output 'src/logic/tsconfig.tsbuildinfo' is older than newest input 'src/logic/tsconfig.json'
 
 [[90m12:10:00 AM[0m] Building project '/src/logic/tsconfig.json'...
 
-[[90m12:10:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because oldest output 'src/tests/index.js' is older than newest input 'src/logic'
+[[90m12:10:00 AM[0m] Project 'src/tests/tsconfig.json' is out of date because oldest output 'src/tests/tsconfig.tsbuildinfo' is older than newest input 'src/logic'
 
 [[90m12:10:00 AM[0m] Building project '/src/tests/tsconfig.json'...
 
@@ -1400,22 +1394,14 @@ getModifiedTime:: {
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/anotherModule.js": 1,
- "/src/core/anotherModule.d.ts": 1,
- "/src/core/anotherModule.d.ts.map": 1,
- "/src/core/index.js": 1,
- "/src/core/index.d.ts": 1,
- "/src/core/index.d.ts.map": 1,
  "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/core/tsconfig.json": 1,
  "/src/logic/index.ts": 1,
- "/src/logic/index.js": 1,
- "/src/logic/index.js.map": 1,
- "/src/logic/decls/index.d.ts": 1,
+ "/src/logic/tsconfig.tsbuildinfo": 1,
+ "/src/logic/tsconfig.json": 1,
  "/src/tests/index.ts": 1,
- "/src/tests/index.js": 1,
- "/src/tests/index.d.ts": 2,
- "/src/tests/tsconfig.tsbuildinfo": 1
+ "/src/tests/tsconfig.tsbuildinfo": 1,
+ "/src/tests/index.d.ts": 1
 }
 
 setModifiedTime:: {}
@@ -1610,11 +1596,11 @@ Output::
     * src/logic/tsconfig.json
     * src/tests/tsconfig.json
 
-[[90m12:13:00 AM[0m] Project 'src/core/tsconfig.json' is up to date because newest input 'src/core/index.ts' is older than oldest output 'src/core/anotherModule.js'
+[[90m12:13:00 AM[0m] Project 'src/core/tsconfig.json' is up to date because newest input 'src/core/index.ts' is older than oldest output 'src/core/tsconfig.tsbuildinfo'
 
-[[90m12:13:00 AM[0m] Project 'src/logic/tsconfig.json' is up to date because newest input 'src/logic/index.ts' is older than oldest output 'src/logic/index.js'
+[[90m12:13:00 AM[0m] Project 'src/logic/tsconfig.json' is up to date because newest input 'src/logic/index.ts' is older than oldest output 'src/logic/tsconfig.tsbuildinfo'
 
-[[90m12:13:00 AM[0m] Project 'src/tests/tsconfig.json' is up to date because newest input 'src/tests/index.ts' is older than oldest output 'src/tests/index.js'
+[[90m12:13:00 AM[0m] Project 'src/tests/tsconfig.json' is up to date because newest input 'src/tests/index.ts' is older than oldest output 'src/tests/tsconfig.tsbuildinfo'
 
 exitCode:: ExitStatus.Success
 readFiles:: {
@@ -1629,23 +1615,12 @@ getModifiedTime:: {
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/anotherModule.js": 1,
- "/src/core/anotherModule.d.ts": 1,
- "/src/core/anotherModule.d.ts.map": 1,
- "/src/core/index.js": 1,
- "/src/core/index.d.ts": 1,
- "/src/core/index.d.ts.map": 1,
  "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/core/tsconfig.json": 1,
  "/src/logic/index.ts": 1,
- "/src/logic/index.js": 1,
- "/src/logic/index.js.map": 1,
- "/src/logic/decls/index.d.ts": 1,
  "/src/logic/tsconfig.tsbuildinfo": 1,
  "/src/logic/tsconfig.json": 1,
  "/src/tests/index.ts": 1,
- "/src/tests/index.js": 1,
- "/src/tests/index.d.ts": 1,
  "/src/tests/tsconfig.tsbuildinfo": 1,
  "/src/tests/tsconfig.json": 1
 }

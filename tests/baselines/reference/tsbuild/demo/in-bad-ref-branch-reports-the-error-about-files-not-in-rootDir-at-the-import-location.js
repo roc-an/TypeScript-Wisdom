@@ -144,7 +144,7 @@ Output::
     * src/zoo/tsconfig.json
     * src/tsconfig.json
 
-[[90m12:00:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because output file 'src/lib/core/utilities.js' does not exist
+[[90m12:00:00 AM[0m] Project 'src/core/tsconfig.json' is out of date because output file 'src/lib/core/tsconfig.tsbuildinfo' does not exist
 
 [[90m12:00:00 AM[0m] Building project '/src/core/tsconfig.json'...
 
@@ -214,7 +214,7 @@ exitCode:: ExitStatus.DiagnosticsPresent_OutputsSkipped
 
 getModifiedTime:: {
  "/src/core/utilities.ts": 1,
- "/src/lib/core/utilities.js": 1
+ "/src/lib/core/tsconfig.tsbuildinfo": 1
 }
 
 setModifiedTime:: {}
