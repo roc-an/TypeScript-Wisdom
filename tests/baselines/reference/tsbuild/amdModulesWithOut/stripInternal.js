@@ -110,13 +110,7 @@ Output::
 exitCode:: ExitStatus.Success
 
 getModifiedTime:: {
- "/src/lib/file0.ts": 1,
- "/src/lib/file1.ts": 1,
- "/src/lib/file2.ts": 1,
- "/src/lib/global.ts": 1,
  "/src/lib/module.tsbuildinfo": 1,
- "/src/app/file3.ts": 1,
- "/src/app/file4.ts": 1,
  "/src/app/module.tsbuildinfo": 1
 }
 
@@ -4928,15 +4922,13 @@ Output::
 exitCode:: ExitStatus.Success
 
 getModifiedTime:: {
+ "/src/lib/module.tsbuildinfo": 1,
  "/src/lib/file0.ts": 1,
  "/src/lib/file1.ts": 1,
- "/src/lib/file2.ts": 1,
- "/src/lib/global.ts": 1,
- "/src/lib/module.tsbuildinfo": 1,
  "/src/lib/module.d.ts": 1,
+ "/src/app/module.tsbuildinfo": 1,
  "/src/app/file3.ts": 1,
  "/src/app/file4.ts": 1,
- "/src/app/module.tsbuildinfo": 1,
  "/src/app/module.js": 1,
  "/src/app/module.js.map": 1,
  "/src/app/module.d.ts": 2,
@@ -8769,15 +8761,13 @@ Output::
 exitCode:: ExitStatus.Success
 
 getModifiedTime:: {
+ "/src/lib/module.tsbuildinfo": 1,
  "/src/lib/file0.ts": 1,
  "/src/lib/file1.ts": 1,
- "/src/lib/file2.ts": 1,
- "/src/lib/global.ts": 1,
- "/src/lib/module.tsbuildinfo": 1,
  "/src/lib/module.d.ts": 1,
+ "/src/app/module.tsbuildinfo": 1,
  "/src/app/file3.ts": 1,
  "/src/app/file4.ts": 1,
- "/src/app/module.tsbuildinfo": 1,
  "/src/app/module.js": 1,
  "/src/app/module.js.map": 1,
  "/src/app/module.d.ts": 1,

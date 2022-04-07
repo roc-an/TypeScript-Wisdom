@@ -54,7 +54,6 @@ Output::
 exitCode:: ExitStatus.Success
 
 getModifiedTime:: {
- "/src/core/index.ts": 1,
  "/src/core/tsconfig.tsbuildinfo": 1
 }
 

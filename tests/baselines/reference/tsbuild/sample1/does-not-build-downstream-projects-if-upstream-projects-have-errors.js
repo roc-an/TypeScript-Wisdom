@@ -118,11 +118,7 @@ Found 1 error.
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsGenerated
 
 getModifiedTime:: {
- "/src/core/anotherModule.ts": 1,
- "/src/core/index.ts": 1,
- "/src/core/some_decl.d.ts": 1,
  "/src/core/tsconfig.tsbuildinfo": 1,
- "/src/logic/index.ts": 1,
  "/src/logic/tsconfig.tsbuildinfo": 1
 }
 
@@ -353,12 +349,11 @@ Found 1 error.
 exitCode:: ExitStatus.DiagnosticsPresent_OutputsSkipped
 
 getModifiedTime:: {
+ "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/core/anotherModule.ts": 1,
  "/src/core/index.ts": 1,
  "/src/core/some_decl.d.ts": 1,
- "/src/core/tsconfig.tsbuildinfo": 1,
  "/src/core/tsconfig.json": 1,
- "/src/logic/index.ts": 1,
  "/src/logic/tsconfig.tsbuildinfo": 1
 }
 

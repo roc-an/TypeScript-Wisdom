@@ -317,9 +317,7 @@ directoryExists:: {
 } 
 
 getModifiedTimes:: {
- "/user/username/projects/myproject/project1/index.ts": 1,
  "/user/username/projects/myproject/project1/tsconfig.tsbuildinfo": 1,
- "/user/username/projects/myproject/project2/index.ts": 1,
  "/user/username/projects/myproject/project2/tsconfig.tsbuildinfo": 1
 } 
 
