@@ -161,6 +161,8 @@ namespace ts {
          * true if program has been emitted
          */
         programEmitComplete?: true;
+        /** Stores list of files that change signature during emit - test only */
+        filesChangingSignature?: Set<Path>;
     }
 
     function hasSameKeys(map1: ReadonlyCollection<string> | undefined, map2: ReadonlyCollection<string> | undefined): boolean {
@@ -1083,7 +1085,9 @@ namespace ts {
                 // Otherwise just affected file
                 Debug.checkDefined(state.program).emit(
                     affected === state.program ? undefined : affected as SourceFile,
-                    writeFile || maybeBind(host, host.writeFile),
+                    affected !== state.program && getEmitDeclarations(state.compilerOptions) && !customTransformers ?
+                    writeFileUpdatingSignature :
+                        writeFile || maybeBind(host, host.writeFile),
                     cancellationToken,
                     emitOnlyDtsFiles || emitKind === BuilderFileEmit.DtsOnly,
                     customTransformers
@@ -1092,6 +1096,39 @@ namespace ts {
                 emitKind,
                 isPendingEmitFile,
             );
+
+            function writeFileUpdatingSignature(
+                fileName: string,
+                data: string,
+                writeByteOrderMark: boolean,
+                onError?: (message: string) => void,
+                sourceFiles?: readonly SourceFile[],
+                sourceMapUrlPos?: number
+            ) {
+                Debug.assert(sourceFiles?.length === 1);
+                if (isDeclarationFileName(fileName)) {
+                    const file = sourceFiles[0];
+                    const info = state.fileInfos.get(file.resolvedPath)!;
+                    const signature = state.currentAffectedFilesSignatures?.get(file.resolvedPath) || info.signature;
+                    if (signature === file.version) {
+                        const newSignature = (computeHash || generateDjb2Hash)(sourceMapUrlPos !== undefined ? data.substring(0, sourceMapUrlPos) : data);
+                        if (newSignature !== file.version) { // Update it
+                            if (host.storeFilesChangingSignatureDuringEmit) (state.filesChangingSignature ||= new Set()).add(file.resolvedPath);
+                            if (state.exportedModulesMap) BuilderState.updateExportedModules(file, file.exportedModulesFromDeclarationEmit, state.currentAffectedFilesExportedModulesMap ||= BuilderState.createManyToManyPathMap());
+                            if (state.affectedFiles && state.affectedFilesIndex! < state.affectedFiles.length) {
+                                state.currentAffectedFilesSignatures!.set(file.resolvedPath, newSignature);
+                            }
+                            else {
+                                info.signature = newSignature;
+                                if (state.exportedModulesMap) BuilderState.updateExportedFilesMapFromCache(state, state.currentAffectedFilesExportedModulesMap);
+                            }
+                        }
+                    }
+                }
+                if (writeFile) writeFile(fileName, data, writeByteOrderMark, onError, sourceFiles, sourceMapUrlPos);
+                else if (host.writeFile) host.writeFile(fileName, data, writeByteOrderMark, onError, sourceFiles, sourceMapUrlPos);
+                else state.program!.writeFile(fileName, data, writeByteOrderMark, onError, sourceFiles, sourceMapUrlPos);
+            }
         }
 
         /**
